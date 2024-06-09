@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi" xml:lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--CSS-->
+    <link th:href="@{/view/css/display.min.css}" rel="stylesheet"/>
+    <link th:href="@{/view/css/chat.css}" rel="stylesheet"/>
+    <link th:href="@{/view/css/animate.min.css}" rel="stylesheet"/>
+    <link th:href="@{/view/js/owl.carousel.min.css}" rel="stylesheet"/>
+    <link th:href="@{/view/js/Lightbox/lightbox.min.css}" rel="stylesheet"/>
+    <link th:href="@{/view/js/slick/slick.css}" rel="stylesheet"/>
+    <link th:href="@{/view/css/Common.css}" rel="stylesheet"/>
+    <!--CSS Responsive-->
+    <link th:href="@{/view/css/css_rwd_common.css}" rel="stylesheet"/>
+    <link th:href="@{/view/css/css_rwd.min.css}" rel="stylesheet"/>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+    <link th:href="@{/view/css/dqw.css}" rel="stylesheet"/>
+    <link th:href="@{/view/css/news_css_rwd.css}" rel="stylesheet"/>
+    <!-- toastr -->
+    <link rel="stylesheet" th:href="@{/toastr/toastr.min.css}">
+    <!-- jquery -->
+    <script th:src="@{/view/js/jquery-1.9.1.min.js}"></script>
+
+    <script th:src="@{/view/js/stv_new.js}"></script>
+    <link rel="shortcut icon" href="https://www.dangquangwatch.vn/view/favicon.ico" type="image/x-icon"/>
+    <script th:text="${session.toastr}">
+        var TYPE_MESSAGE = "{{session('toastr.type') }}";
+        var MESSAGE = "{{session('toastr.message') }}";
+    </script>
+    <script>
+        $(function () {
+            $(".js-login").on('click', function (event) {
+                event.preventDefault();
+                toastr.warning('Bạn cần đăng nhập');
+            })
+            $(window).bind("load", function () {
+                jQuery("#status").fadeOut();
+                jQuery("#loader").fadeOut();
+            });
+        })
+    </script>
+</head>
+
+<body>
+<!-- Messenger Chat plugin Code -->
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            xfbml: true,
+            version: 'v10.0'
+        });
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<!-- Your Chat plugin code -->
+<div class="fb-customerchat"
+     attribution="page_inbox"
+     page_id="103980634638551">
+</div>
+<div id='status'></div>
+<div id='loader'></div>
+<div id="commonHead">
+    <div class="wrp">
+        <h1 class="textLeft dnTablet-l">Đồng hồ nam, Đẳng cấp thương hiệu</h1>
+        <form th:action="@{'/san-pham'}" class="frmSearch" method="get">
+            <div class="flex">
+                <input type="text" name="keyword" id="keyword" th:value="${param.keyword }"
+                       placeholder="Nhập từ khóa tìm kiếm..."/>
+                <button class="btnSearch" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </form>
+        <ul class="menuRight dnTablet-l" th:if="${user}">
+            <li><a href="{{ route('get.user.orders', ['status' => 0]) }}" title="Home">Đơn hàng</a></li>
+            <li><a href="{{ route('get.user.index')}}">[[${user.name}]]</a></li>
+            <li><a th:href="@{'/user/auth/logout'}">Đăng xuất</a></li>
+        </ul>
+        <ul class="menuRight dnTablet-l" th:else>
+            <li><a th:href="@{'/user/auth/login'}">Đăng nhập</a></li>
+            <li><a th:href="@{'/user/auth/register'}">Đăng ký</a></li>
+        </ul>
+    </div>
+</div>
+<div id="header">
+    <div class="wrp">
+        <a href="/" title="Home" class="logo">
+            <img th:src="@{/view/img/logo.png}" alt="Logo" class="logo"/>
+        </a>
+        <div id="menuMain">
+            <ul>
+                <li class="hasChild">
+                    <a href="javascript:" title="Đồng hồ chính hãng">Đồng hồ chính hãng</a>
+                    <ul>
+                        <li>
+                            <div class="subMenu" style="width: 250px;">
+                                <div class="group">
+                                    <div class="item" th:each="category: ${categories}" th:if="${category.c_cate == 'watch'}">
+                                        <a th:href="@{'/danh-muc/' + ${category.c_slug}}">[[${category.c_name}]]</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:" title="Kinh mat thoi trang">Kính mắt thời trang</a>
+                    <ul>
+                        <li>
+                            <div class="subMenu" style="width: 250px;">
+                                <div class="group">
+                                    <div class="item">
+                                        <div class="item" th:each="category: ${categories}" th:if="${category.c_cate == 'glass'}">
+                                            <a th:href="@{'/danh-muc/' + ${category.c_slug}}">[[${category.c_name}]]</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:" title="Phu kien dong ho">Phụ kiện đồng hồ</a>
+                    <ul>
+                        <li>
+                            <div class="subMenu" style="width: 250px;">
+                                <div class="group">
+                                    <div class="item">
+                                        <div class="item" th:each="category: ${categories}" th:if="${category.c_cate == 'accessories'}">
+                                            <a th:href="@{'/danh-muc/' + ${category.c_slug}}">[[${category.c_name}]]</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <a href="tel:18006005" class="item">
+                <span class="icon">
+                    <img th:src="@{/view/img/hotline.png}" alt="Hotline"/>
+                </span>
+                <span class="text">
+                    <span class="top">Hotline</span>
+                    <span class="bot">1800 0000</span>
+                </span>
+            </a>
+            <a href="{{ route('get.shopping.index')}}" class="btnCart">
+                <i class="fa fa-shopping-cart"></i>
+                <span class="number">{{  Cart::count() }}</span>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="zalo-chat-widget" data-oaid="3317742618024098879" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="300" data-height="300"> </div>
+
+<script src="https://sp.zalo.me/plugins/sdk.js"> </script>
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            xfbml: true,
+            version: 'v10.0'
+        });
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- Your Chat Plugin code -->
+<div class="fb-customerchat"
+     attribution="setup_tool"
+     page_id="103980634638551">
+</div>

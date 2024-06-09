@@ -1,0 +1,56 @@
+<div th:include="/fragments/user/layout"></div>
+<div class="wrapper">
+    <div th:replace="/fragments/user/header :: header"></div>
+    <div th:replace="/fragments/user/sidebar :: aside"></div>
+    <div class="content-wrapper" style="min-height: 902.55px;">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                [[#{user}]]
+                <a th:href="@{'/admin/user/create'}" class="btn btn-primary">[[#{create}]]</a>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a th:href="@{'/admin'}"><i class="fa fa-dashboard"></i>[[#{home}]]</a></li>
+                <li class="active">[[#{user}]]</li>
+            </ol>
+            <div th:if="${message}" class="alert alert-success text-center mt-3">[[${message}]]</div>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <td>#</td>
+                    <td>[[#{username}]]</td>
+                    <td>Email</td>
+                    <td>[[#{phone_number}]]</td>
+                    <td>[[#{role}]]</td>
+                    <td>Action</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${users.isEmpty()}">
+                    <th colspan="6">[[#{no_result_found}]]</th>
+                </tr>
+                <tr th:each="user : ${users}">
+                    <td>[[${userStat.index + 1}]]</td>
+                    <td>[[${user.name}]]</td>
+                    <td>[[${user.email}]]</td>
+                    <td>[[${user.phone}]]</td>
+                    <td th:if="${user.getAdmin()} == 0">[[#{user}]]</td>
+                    <td th:else>[[#{admin}]]</td>
+                    <td>
+                        <a th:href="@{'/admin/user/edit/' + ${user.id}}" class="btn btn-secondary"><i class="fa fa-edit"></i> [[#{edit}]]</a>
+                        <a th:href="@{'/admin/user/delete/' + ${user.id}}" class="btn btn-secondary"><i class="fa fa-trash text-danger"></i> [[#{delete}]]</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div th:include="/fragments/user/pagination"></div>
+        </section>
+        <!-- /.content -->
+    </div>
+</div>
+<div th:include="/fragments/user/footer"></div>

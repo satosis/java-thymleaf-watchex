@@ -1,0 +1,60 @@
+<div th:include="/fragments/user/layout"></div>
+<div class="wrapper">
+    <div th:replace="/fragments/user/header :: header"></div>
+    <div th:replace="/fragments/user/sidebar :: aside"></div>
+    <div class="content-wrapper" style="min-height: 902.55px;">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                [[#{product}]]
+                <a th:href="@{'/admin/product/create'}" class="btn btn-primary">[[#{create}]]</a>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a th:href="@{'/admin'}"><i class="fa fa-dashboard"></i>[[#{home}]]</a></li>
+                <li class="active">[[#{product}]]</li>
+            </ol>
+            <div th:if="${message}" class="alert alert-success text-center mt-3">[[${message}]]</div>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <td>#</td>
+                    <td>[[#{name}]]</td>
+                    <td>[[#{price}]]</td>
+                    <td>[[#{sale}]]</td>
+                    <td>[[#{type}]]</td>
+                    <td>[[#{avatar}]]</td>
+                    <td>Pay</td>
+                    <td>View</td>
+                    <td>Action</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${products.isEmpty()}">
+                    <th colspan="9">[[#{no_result_found}]]</th>
+                </tr>
+                <tr th:each="product : ${products}">
+                    <td>[[${productStat.index + 1}]]</td>
+                    <td>[[${product.name}]]</td>
+                    <td>[[${product.price}]]</td>
+                    <td>[[${product.sale}]]</td>
+                    <td>[[${product.type}]]</td>
+                    <td>[[${product.avatar}]]</td>
+                    <td>[[${product.pay}]]</td>
+                    <td>[[${product.view}]]</td>
+                    <td>
+                        <a th:href="@{'/admin/product/edit/' + ${product.id}}" class="btn btn-secondary"><i class="fa fa-edit"></i> [[#{edit}]]</a>
+                        <a th:href="@{'/admin/product/delete/' + ${product.id}}" class="btn btn-secondary"><i class="fa fa-trash text-danger"></i> [[#{delete}]]</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div th:include="/fragments/user/pagination"></div>
+        </section>
+        <!-- /.content -->
+    </div>
+</div>
+<div th:include="/fragments/user/footer"></div>

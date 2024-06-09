@@ -1,0 +1,16 @@
+﻿<div class="ui pagination menu" role="navigation" th:if="${totalPages > 1}">
+    <div class="col-sm-2">
+        Total Rows: [[${totalItems}]]
+    </div>
+    <a class="icon item disabled" href="javascript:;" th:if="${currentPage == 1}" aria-disabled="true" aria-label="Previous"> <i class="left chevron icon"></i> </a>
+    <a class="icon item" th:href="@{'/admin/' + ${models} + '/page/' + ${currentPage - 1}}" rel="prev" aria-label="Previous"> <i class="left chevron icon"></i> </a>
+
+    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+    <a class="item active" th:href="@{'/admin/' + ${models} + '/page/' + ${i}}"  aria-current="page" th:if="${currentPage == i}">[[${i}]]</a>
+    <a class="item" th:href="@{'/admin/' + ${models} + '/page/' + ${i}}" >[[${i}]]</a>
+    @endif
+    </span>
+    <a class="icon item" th:href="@{'/admin/' + ${models} + '/page/' + ${currentPage + 1}}"  th:if="${currentPage != totalPages}" rel="next" aria-label="Next"> <i class="right chevron icon"></i> </a>
+    <a class="icon item disabled" aria-disabled="true" th:else aria-label="Next"> <i class="right chevron icon"></i> </a>
+    @endif
+</div>
