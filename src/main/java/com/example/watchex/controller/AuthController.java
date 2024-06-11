@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -61,7 +62,6 @@ public class AuthController {
     public String loginForm(Model model) {
         List<Category> categories = categoryService.getAll();
         model.addAttribute("categories",categories);
-        model.addAttribute("user", CommonUtils.getCurrentUser());
 
         return "auth/login";
     }
@@ -70,15 +70,19 @@ public class AuthController {
     public String login(@Valid @ModelAttribute("loginDto") LoginDto loginDto,
                         BindingResult result)
             throws MethodArgumentNotValidException, UsernameNotFoundException {
-        if (result.hasErrors()) {
-            return "auth/login";
-        }
         AuthenticationResponse jwt;
         User user = userService.findByEmail(loginDto.getEmail());
-
+        if (user == null) {
+            result.rejectValue("email", "error.email", "Tài khoản không tồn tại !");
+            return "auth/login";
+        }
         boolean checkPassword = new BCryptPasswordEncoder().matches(loginDto.getPassword(), user.getPassword());
         if (!checkPassword) {
-            throw new UsernameNotFoundException("Tài khoản hoặc mật khẩu không chính xác !");
+            result.rejectValue("email", "error.email", "Tài khoản hoặc mật khẩu không chính xác !");
+            return "auth/login";
+        }
+        if (result.hasErrors()) {
+            return "auth/login";
         }
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);

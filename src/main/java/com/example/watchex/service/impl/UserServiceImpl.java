@@ -28,10 +28,7 @@ public class UserServiceImpl extends GenericServiceImpl<User, Integer> implement
     @Override
     public User show(Integer id) throws UserPrincipalNotFoundException {
         Optional<User> result = repository.findById(id);
-        if (result.isPresent()) {
-            return result.get();
-        }
-        throw new UserPrincipalNotFoundException("Tài khoản không tồn tại");
+        return result.orElse(null);
     }
 
     @Override
@@ -42,9 +39,6 @@ public class UserServiceImpl extends GenericServiceImpl<User, Integer> implement
     @Override
     public User findByEmail(String email) {
         Optional<User> result = Optional.ofNullable(repository.findByEmail(email));
-        if (result.isPresent()) {
-            return result.get();
-        }
-        throw new UsernameNotFoundException("Tài khoản không tồn tại");
+        return result.orElse(null);
     }
 }
