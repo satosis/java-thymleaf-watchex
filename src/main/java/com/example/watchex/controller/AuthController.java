@@ -7,28 +7,22 @@ import com.example.watchex.dto.RegisterDto;
 import com.example.watchex.entity.Category;
 import com.example.watchex.entity.Token;
 import com.example.watchex.entity.User;
-import com.example.watchex.exceptions.MessageEntity;
 import com.example.watchex.service.*;
-import com.example.watchex.utils.CommonUtils;
 import com.example.watchex.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -69,7 +63,7 @@ public class AuthController {
     @GetMapping("auth/login")
     public String loginForm(Model model) {
         List<Category> categories = categoryService.getAll();
-        model.addAttribute("categories",categories);
+        model.addAttribute("categories", categories);
 
         return "auth/login";
     }
@@ -156,6 +150,7 @@ public class AuthController {
         user.setEmail(registerDto.getEmail());
         user.setPhone(registerDto.getPhone());
         user.setPassword(registerDto.getPassword());
+        user.setGender(0);
         userService.save(user);
 
         Token token = new Token();
@@ -164,8 +159,8 @@ public class AuthController {
         token.setUser(user);
         tokenService.createToken(token);
         JwtResponse jwt = new JwtResponse(token.getToken(), user.getEmail());
-        String subject = "Đăng ký thành công";
-        String template = "user-register-template";
+        String subject = "Xác nhận đăng ký thành công";
+        String template = "email/user-register-template";
         emailService.sendEmail(registerDto.getEmail(), subject, template);
         return "redirect:/auth/login";
     }

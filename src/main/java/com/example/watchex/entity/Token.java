@@ -27,11 +27,11 @@ public class Token {
     private Date tokenExpDate;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name="user_id", nullable=true)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="admin_id", nullable=false)
+    @JoinColumn(name="admin_id", nullable=true)
     private Admin admin;
 
     @Enumerated(EnumType.STRING)
