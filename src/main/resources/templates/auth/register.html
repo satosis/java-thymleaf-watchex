@@ -10,7 +10,7 @@
         <br>
         <h1>HOẶC ĐĂNG KÝ TÀI KHOẢN TẠI ĐÂY</h1><br>
     </div>
-    <form th:action="@{'/user/auth/login'}" method="post" th:object="${loginDto}" role="form" class="col-md-8">
+    <form th:action="@{'/user/auth/register'}" method="post" th:object="${registerDto}" role="form" class="col-md-8">
         <div class="form-group">
             <label for="xampleInputname1">Name <b class="red">(*)</b> </label>
             <input type="text" th:field="*{name}" class="form-control" id="xampleInputname1"
@@ -33,16 +33,24 @@
         </div>
 
         <div class="form-group">
-            <label for="xampleInputEmai1">Password <b class="red">(*)</b> </label>
-            <input type="password" th:field="*{password}" class="form-control" id="xampleInputEmai1"
+            <label for="xampleInputPassword">Password <b class="red">(*)</b> </label>
+            <input type="password" th:field="*{password}" class="form-control" id="xampleInputPassword"
                    autocomplete="off">
             <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>
+        </div>
+
+        <div class="form-group">
+            <label for="xampleInputPasswordConfirm">Password Confirm<b class="red">(*)</b> </label>
+            <input type="password" th:field="*{password_confirm}" class="form-control" id="xampleInputPasswordConfirm"
+                   autocomplete="off">
+            <p th:if="${#fields.hasErrors('password_confirm')}" class="text-danger" th:errors="*{password_confirm}"></p>
         </div>
 
         <br>
         <div>
             <button type="submit" class="btn btn-primary">Đăng ký</button>
             <a href="/" class="btn btn-danger"><i class="fa fa-undo"></i> Quay lại</a>
+        </div>
     </form>
     <br>
 
