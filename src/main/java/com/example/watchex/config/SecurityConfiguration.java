@@ -35,7 +35,8 @@ public class SecurityConfiguration {
                  "/uploads/**",
                  "/vendor/**",
                  "/video/**",
-                 "/view/**"
+                 "/view/**",
+                 "/product/**"
                 )
                 .permitAll()
                 .anyRequest()

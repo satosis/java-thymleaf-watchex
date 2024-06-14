@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.text.Normalizer;
+import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -45,4 +46,5 @@ public class CommonUtils {
             return (User) authentication.getPrincipal();
         }
     }
+
 }

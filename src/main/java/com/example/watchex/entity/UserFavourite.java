@@ -19,12 +19,12 @@ public class UserFavourite {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="product_id", nullable=false)
-    private Product uf_product_id;
+    @JoinColumn(name="uf_product_id", nullable=false)
+    private Product product;
 
     @ManyToOne
     @JoinColumn(name="uf_user_id", nullable=false)
-    private User uf_user_id;
+    private User user;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

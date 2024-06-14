@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin/category")
 public class AdminCategoryController {
     @Autowired
     private MessageSource messageSource;

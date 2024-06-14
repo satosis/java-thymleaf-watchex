@@ -15,7 +15,7 @@ import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin/user")
 public class AdminUserController {
     @Autowired
     private MessageSource messageSource;

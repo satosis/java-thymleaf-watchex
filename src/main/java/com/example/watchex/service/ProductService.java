@@ -1,5 +1,6 @@
 package com.example.watchex.service;
 
+import com.example.watchex.dto.ProductDto;
 import com.example.watchex.entity.Product;
 import com.example.watchex.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,26 @@ public class ProductService {
         throw new ClassNotFoundException("Product not found");
     }
 
+    public ProductDto findBySlug(String slug) {
+        return productRepository.findBySlug(slug);
+    }
     public void delete(Integer id) {
         productRepository.deleteById(id);
+    }
+
+    public List<Product> getProductsAccessoriess() {
+        return productRepository.getProductsAccessoriess(PageRequest.of(0, 10, Sort.by("id").descending()));
+    }
+
+    public List<Product> getProductsGlass() {
+        return productRepository.getProductsGlass(PageRequest.of(0, 10, Sort.by("id").descending()));
+    }
+
+    public List<Product> getProductsWatch() {
+        return productRepository.getProductsWatch(PageRequest.of(0, 10, Sort.by("id").descending()));
+    }
+
+    public List<Product> getProductsByCategory(Integer cate) {
+        return productRepository.getProductsByCategory(cate, PageRequest.of(0, 10, Sort.by("id").descending()));
     }
 }

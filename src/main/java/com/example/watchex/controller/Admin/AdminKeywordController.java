@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin/keyword")
 public class AdminKeywordController {
     @Autowired
     private MessageSource messageSource;

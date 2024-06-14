@@ -162,7 +162,7 @@ public class AuthController {
         String subject = "Xác nhận đăng ký thành công";
         String template = "email/user-register-template";
         emailService.sendEmail(registerDto.getEmail(), subject, template);
-        return "redirect:/auth/login";
+        return "redirect:/user/auth/login";
     }
 
 //    @PostMapping("auth/register")

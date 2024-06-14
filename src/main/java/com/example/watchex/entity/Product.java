@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 @Getter
 @Setter
 public class Product {
@@ -31,8 +31,8 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name="pro_category", nullable=false)
-    private Category pro_category;
-    private Integer pro_avatar;
+    private Category category;
+    private String pro_avatar;
     private Integer pro_favourite;
     private Integer pro_hot;
     private Integer pro_active;
@@ -58,5 +58,15 @@ public class Product {
 
     public void setSlug() {
         this.pro_slug = CommonUtils.toSlug(this.pro_name);
+    }
+
+    public String getPro_avatar() {
+        String[] partsCollArr;
+        if (this.pro_avatar != null) {
+            partsCollArr = this.pro_avatar.split("__");
+            String dateAvatar = partsCollArr[0].replace('-', '/');
+            return "http://localhost:8081/uploads/" + dateAvatar + "/" + this.pro_avatar;
+        }
+        return "http://localhost:8081/view/img/no-image.png";
     }
 }
