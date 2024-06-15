@@ -52,4 +52,5 @@ public class CommonConfigurations implements WebMvcConfigurer {
         }
         return String.format("%,.0f", formatPrice);
     }
+
 }

@@ -13,22 +13,22 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT p FROM Product p " +
             "WHERE p.pro_active = 1  " +
             "order by p.pro_pay desc")
-    List<Product> getProductsAccessoriess(Pageable pageable);
+    List<ProductDto> getProductsAccessoriess(Pageable pageable);
 
     @Query("SELECT p FROM Product p " +
             "WHERE p.pro_active = 1 " +
             "order by p.pro_pay desc")
-    List<Product> getProductsGlass(Pageable pageable);
+    List<ProductDto> getProductsGlass(Pageable pageable);
 
     @Query("SELECT p FROM Product p " +
             "WHERE p.pro_active = 1 " +
             "order by p.pro_pay desc")
-    List<Product> getProductsWatch(Pageable pageable);
+    List<ProductDto> getProductsWatch(Pageable pageable);
 
-    @Query(nativeQuery = true, value = "SELECT p.* FROM Product p " +
+    @Query("SELECT p FROM Product p " +
             "WHERE p.pro_active = 1 " +
             "order by p.pro_pay desc")
-    List<Product> getProductsByCategory(Integer cate, Pageable pageable);
+    List<ProductDto> getProductsByCategory(Integer cate, Pageable pageable);
 
     @Query("select p from Product p where p.pro_slug = :slug")
     ProductDto findBySlug(String slug);

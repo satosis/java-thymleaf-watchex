@@ -2,6 +2,7 @@ package com.example.watchex.dto;
 
 import com.example.watchex.entity.Category;
 import com.example.watchex.entity.Keyword;
+import com.example.watchex.entity.Rating;
 
 import java.util.Date;
 import java.util.Set;
@@ -49,6 +50,8 @@ public interface ProductDto {
 
     Set<Keyword> getKeyword();
 
+    Set<Rating> getRatings();
+
     Date getCreatedAt();
 
     Date getUpdatedAt();
@@ -59,4 +62,6 @@ public interface ProductDto {
         }
         return getPro_review_star();
     }
+
+
 }

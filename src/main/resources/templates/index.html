@@ -3,7 +3,7 @@
 <div th:include="/components/slide"></div>
 <div class="product">
     <div class="wrp">
-        <a href="javascript://" title="" class="titleHead">Sản phẩm bán chạy </a>
+        <a href="javascript://" title="" class="titleHead" style="margin-top: 30px">Sản phẩm bán chạy </a>
         <div class="tabs">
             <ul class="tab-links">
                 <li class="active"><a href="#tab1" title="">ĐỒNG HỒ CHÍNH HÃNG</a></li>
@@ -12,13 +12,13 @@
             </ul>
             <div class="tabContent">
                 <div id="tab1" class="tab active">
-                    <div class="group slide" th:each="product: ${productsWatch}">
-                        <div th:include="/components/product/item" th:with="product=${product}"></div>
+                    <div class="group slide"
+                         th:include="/components/product/item" th:with="products=${productsWatch}">
                     </div>
                 </div>
                 <div id="tab2" class="tab">
-                    <div class="group slide" th:each="product: ${productsGlass}">
-                        <div th:include="/components/product/item" th:with="product=${product}"></div>
+                    <div class="group slide"
+                         th:include="/components/product/item" th:with="products=${productsGlass}">
                     </div>
                     <div class="btnXemthem dn">
                         <a href="javascript://" title="xem them" class="xemthem" rel="nofollow">
@@ -30,8 +30,8 @@
                     </div>
                 </div>
                 <div id="tab3" class="tab">
-                    <div class="group slide" th:each="product: ${productsAccessoriess}">
-                        <div th:include="/components/product/item" th:with="product=${product}"></div>
+                    <div class="group slide"
+                         th:include="/components/product/item" th:with="products=${productsAccessoriess}">
                     </div>
                     <div class="btnXemthem dn">
                         <a href="javascript://" title="" class="xemthem" rel="nofollow">
@@ -112,8 +112,8 @@
                 PHILIPPE AUGUSTE
             </a>
         </h2>
-        <div class="group slide" th:each="product: ${listProduct1}">
-            <div th:include="/components/product/item" th:with="product=${product}"></div>
+        <div class="group slide"
+             th:include="/components/product/item" th:with="products=${listProduct1}">
         </div>
     </div>
 </div>
@@ -121,12 +121,14 @@
     <div class="wrp">
         <h2 class="titleCate">
             <a href="/sp/dong-ho-diamond-d.html" title="Diamond D">
-                    <span class="icon"><img data-src="/view/img/icon1.png" alt="Diamond D" class="lazy"
-                                            src="/view/lazy.jpg"/></span>Đồng hồ Diamond D
+                    <span class="icon">
+                        <img data-src="/view/img/icon1.png" alt="Diamond D" class="lazy"
+                                            src="/view/lazy.jpg"/>
+                    </span>Đồng hồ Diamond D
             </a>
         </h2>
-        <div class="group slide" th:each="product: ${listProduct2}">
-            <div th:include="/components/product/item" th:with="product=${product}"></div>
+        <div class="group slide"
+             th:include="/components/product/item" th:with="products=${listProduct2}">
         </div>
     </div>
 </div>
@@ -153,8 +155,8 @@
                         class="fa fa-chevron-right"></i></a>
             </h2>
         </div>
-        <div class="group slide3" th:each="product: ${listProduct3}">
-            <div th:include="/components/product/item" th:with="product=${product}"></div>
+        <div class="group slide3"
+             th:include="/components/product/item" th:with="products=${listProduct3}">
         </div>
     </div>
 </div>
@@ -166,8 +168,8 @@
                 JACQUES LEMANS
             </a>
         </h2>
-        <div class="group slide" th:each="product: ${listProduct4}">
-            <div th:include="/components/product/item" th:with="product=${product}"></div>
+        <div class="group slide"
+             th:include="/components/product/item" th:with="products=${listProduct4}">
         </div>
     </div>
 </div>
@@ -179,10 +181,9 @@
                 ĐỒNG HỒ ARIES GOLD
             </a>
         </h2>
-        <div class="group slide" th:each="product: ${listProduct5}">
-            <div th:include="/components/product/item" th:with="product=${product}"></div>
+        <div class="group slide"
+             th:include="/components/product/item" th:with="products=${listProduct5}">
         </div>
-
     </div>
 </div>
 <div class="product product3">
@@ -229,8 +230,8 @@
                     </div>
                 </div>
             </div>
-            <div class="group slide" th:each="product: ${listProduct6}">
-                <div th:include="/components/product/item" th:with="product=${product}"></div>
+            <div class="group slide"
+                 th:include="/components/product/item" th:with="products=${listProduct6}">
             </div>
         </div>
 

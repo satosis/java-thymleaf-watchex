@@ -78,7 +78,7 @@
                 <button class="btnSearch" type="submit"><i class="fa fa-search"></i></button>
             </div>
         </form>
-        <ul class="menuRight dnTablet-l" th:if="${user}">
+        <ul class="menuRight dnTablet-l" th:if="${#request.userPrincipal}">
             <li><a href="{{ route('get.user.orders', ['status' => 0]) }}" title="Home">Đơn hàng</a></li>
             <li><a href="{{ route('get.user.index')}}">[[${user.name}]]</a></li>
             <li><a th:href="@{'/user/auth/logout'}">Đăng xuất</a></li>

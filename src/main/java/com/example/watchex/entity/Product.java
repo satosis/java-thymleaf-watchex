@@ -45,9 +45,6 @@ public class Product {
     private Integer pro_review_star;
     private String _wysihtml5_mode;
 
-    @ManyToMany
-    Set<Keyword> keyword;
-
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
@@ -56,6 +53,11 @@ public class Product {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @ManyToMany
+    Set<Keyword> keyword;
+
+    @OneToMany
+    Set<Rating> ratings;
     public void setSlug() {
         this.pro_slug = CommonUtils.toSlug(this.pro_name);
     }

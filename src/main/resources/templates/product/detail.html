@@ -95,8 +95,8 @@
                     <div class="detail">
                         <div class="otherPro slideRes">
                             <h3 class="title">Có thể bạn sẽ thích</h3>
-                            <div class="group" th:each="product: ${productSuggest}">
-                                <div th:include="/components/product/item" th:with="product=${product}"></div>
+                            <div class="group"
+                                 th:include="/components/product/item" th:with="products=${productSuggest}">
                             </div>
                         </div>
                         <div class="dn dbTablet">
@@ -397,14 +397,13 @@
                                     <div class="top">
                                         <div class="container-star starCtn left" id="ratings"
                                              style="width: 223.125px; height: 16.625px;">
-                                            @for ($i=1;$i<=5;$i++)
                                             <i class="fa fa-star opacity cursor" style="zoom:2"
-                                               data-i={{$i}}></i>
-                                            @endfor
+                                               th:each="i : ${#numbers.sequence(1, 5)}"
+                                               th:data-i="${i}" ></i>
                                             <span id="review_text"></span>
                                             <input type="hidden" id="review_value" name="review" value="5">
                                             <input type="hidden" id="product_id" name="product_id"
-                                                   value="{{ $product->id }}">
+                                                   th:value="${product.id}">
                                         </div>
                                     </div>
                                     <div class="pdp-mod-qna">

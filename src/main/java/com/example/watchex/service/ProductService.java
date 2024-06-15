@@ -43,19 +43,19 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public List<Product> getProductsAccessoriess() {
+    public List<ProductDto> getProductsAccessoriess() {
         return productRepository.getProductsAccessoriess(PageRequest.of(0, 10, Sort.by("id").descending()));
     }
 
-    public List<Product> getProductsGlass() {
+    public List<ProductDto> getProductsGlass() {
         return productRepository.getProductsGlass(PageRequest.of(0, 10, Sort.by("id").descending()));
     }
 
-    public List<Product> getProductsWatch() {
+    public List<ProductDto> getProductsWatch() {
         return productRepository.getProductsWatch(PageRequest.of(0, 10, Sort.by("id").descending()));
     }
 
-    public List<Product> getProductsByCategory(Integer cate) {
-        return productRepository.getProductsByCategory(cate, PageRequest.of(0, 10, Sort.by("id").descending()));
+    public List<ProductDto> getProductsByCategory(Integer cate, Integer limit) {
+        return productRepository.getProductsByCategory(cate, PageRequest.of(0, limit, Sort.by("id").descending()));
     }
 }

@@ -1,0 +1,102 @@
+<div th:include="/fragments/user/header"></div>
+<title>[[${title}]]</title>
+<br>
+<link rel="stylesheet" type="text/css" href="/core/Smarty/templates/paging/style.css">
+
+<div id="product">
+    <div class="wrp">
+        <div id="filter">
+            <div class="order">
+                <div class="price">
+                    <span>Giá: </span>
+                    <div class="lstPrice">
+                        <ul>
+                            <li th:class="${param.price} == 1 ? 'active' : ''">
+                                <a href="{{ request()->fullUrlWithQuery(['price' => 1]  ) }} ">
+                                    Dưới 2 triệu
+                                </a>
+                            </li>
+
+                            <li th:class="${param.price} == '2' ? 'active' : ''">
+                                <a href="{{ request()->fullUrlWithQuery(['price' => 2]  ) }} ">
+                                    Từ 2 triệu - 5 triệu
+                                </a>
+                            </li>
+
+                            <li th:class="${param.price} == '5' ? 'active' : ''">
+                                <a href="{{ request()->fullUrlWithQuery(['price' => 5]  ) }} ">
+                                    Từ 5 triệu - 10 triệu
+                                </a>
+                            </li>
+
+                            <li th:class="${param.price} == '10' ? 'active' : ''">
+                                <a href="{{ request()->fullUrlWithQuery(['price' => 10]  ) }} ">
+                                    Từ 10 triệu - 25 triệu
+                                </a>
+                            </li>
+
+
+                            <li th:class="${param.price} == '50' ? 'active' : ''">
+                                <a href="{{ request()->fullUrlWithQuery(['price' => 50]  ) }} ">
+                                    Trên 50 triệu
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="function odering">
+                        <span class="openSubOrder">Sắp xếp <i class="fa fa-caret-down"></i></span>
+                        <div class="sub filter">
+                            <div class="group">
+                                <ul>
+                                    <li>
+                                        <label th:class="${param.s} == '1' ? 'active' : ''">
+                                            <span class="check"><i class="fa fa-check"></i></span>
+                                            <span><a href="#" title="San pham noi bat">Sản phẩm nổi bật</a></span>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label th:class="${param.s} == '2' ? 'active' : ''">
+                                            <span class="check"><i class="fa fa-check"></i></span>
+                                            <span><a href="{{ request()->fullUrlWithQuery(['s' => 2]  ) }}"
+                                                     title="Thap den cao">Giá thấp đến cao</a></span>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label th:class="${param.s} == '3' ? 'active' : ''">
+                                            <span class="check"><i class="fa fa-check"></i></span>
+                                            <span><a href="{{ request()->fullUrlWithQuery(['s' => 1]  ) }}"
+                                                     title="Cao xuong thap">Giá cao xuống thấp</a></span>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="javascript://" class="closeSub"><i class="fa fa-times-circle"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="product">
+            <div class="group active" th:if="${products.isEmpty()}">
+                <div class="text-center">
+                    <img th:src="@{/view/img/no_result.jpg}" alt="No result"/>
+                </div>
+            </div>
+
+            <div class="group active" th:else th:include="/components/product/item" th:with="products=${products}">
+            </div>
+            <div class="box-footer">
+                <div th:include="/components/pagination"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</div>
+</div>
+<div th:include="/fragments/user/footer"></div>

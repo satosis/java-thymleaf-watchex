@@ -1,4 +1,4 @@
-<div class="item" th:if="${product != null}">
+<div class="item" th:each="product: ${products}">
     <div class="wImage">
         <a th:href="@{/product/{slug}(slug=${product.pro_slug})}" class="image">
             <img th:src="${product.pro_avatar}" th:alt="${product.pro_name}" class="lazy"/>
@@ -10,15 +10,12 @@
             <h3>[[${product.pro_name}]]</h3>
         </a>
         <div style="display:flex">
-
-            @for($i=1;$i<=$age;$i++)
             <img style="width:15.96px;height:15.96px"
-                 src="//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png">
-            @endfor
-            @for($j=$age+1;$j<=5;$j++)
+                 src="//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png"
+                 th:each="i : ${#numbers.sequence(1, product.star)}">
             <img style="width:15.96px;height:15.96px"
-                 src="//laz-img-cdn.alicdn.com/tfs/TB18ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png">
-            @endfor
+                 src="//laz-img-cdn.alicdn.com/tfs/TB18ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png"
+                 th:each="i : ${#numbers.sequence(product.star + 1, 5)}" th:if="${product.star < 5}">
         </div>
         <div class="price">
             <p class="new">[[${@commonConfigurations.formatPrice(product.pro_price, product.pro_sale, 0)}]]đ</p>
