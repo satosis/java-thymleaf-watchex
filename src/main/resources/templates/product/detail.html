@@ -81,12 +81,11 @@
                                 <span>Giao hàng miễn phí - Thanh toán tại nhà</span>
                             </a>
                         </div>
-
-                        <div th:if="${tags.length > 0}">
+                        <div th:if="${tags != null}">
                             <legend>Từ khóa</legend>
                             <i class="fa fa-tag"></i>
                             <p th:each="tag: ${tags}">
-                                <a href="javascript:;" style="color: #00d4c0 !important;font-size:20px"># [[${tag}]]</a>
+                                <a href="javascript:;" style="color: #00d4c0 !important;font-size:20px" th:ìf="${tag != null}"># [[${tag}]]</a>
                             </p>
                         </div>
                     </div>
@@ -382,10 +381,8 @@
                     </div>
                 </div>
 
-                @if(isset(Auth::user()->id))
-                <div id="block-review">
+                <div id="block-review" th:if="${#request.userPrincipal}">
                     <form action="{{ route('ajax_post.user.rating.add') }}" class="form-question" method="post">
-                        @csrf
                         <div class="item">
                             <br><br>
                             <div id="module_product_qna" class="pdp-block module">
@@ -423,8 +420,7 @@
                                 </div>
                             </div>
                         </div>
-                </div>
-                </form>
+                    </form>
                 @if(!$rating)
                 <span class="lazada lazada-noReview lazada-icon qna-empty-icon"></span>
                 <div class="qna-empty-text">Chưa có câu hỏi cho sản phẩm này.</div>
@@ -442,7 +438,6 @@
                 </ul>
                 @endif
             </div>
-            @endif
         </div>
     </div>
 </div>

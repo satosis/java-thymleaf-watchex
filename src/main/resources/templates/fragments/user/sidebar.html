@@ -1,54 +1,59 @@
-<aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar" style="height: auto;">
-        <!-- Sidebar user panel -->
-        <div class="user-panel">
-            <div class="pull-left image">
-                <img th:src="@{/dist/img/user2-160x160.jpg}" class="img-circle" alt="User Image">
-            </div>
-            <div class="pull-left info">
-                <p>Administrator</p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-            </div>
-        </div>
+<link rel="stylesheet" type="text/css" media="all"
+      href="//laz-g-cdn.alicdn.com/lzdmod/playground-nav/5.0.0/pc/index.css"/>
+<link rel="stylesheet" href="//laz-g-cdn.alicdn.com/lzdfe/account/3.4.33/pages/profile-pc/index.css">
+<!--$ lzd start --prod -->
 
-        <ul class="sidebar-menu tree" data-widget="tree">
-            <li class="header">Thanh điều hướng</li>
+<link rel="stylesheet" href="//laz-g-cdn.alicdn.com/lzd/assets/0.0.7/dpl-buyeruikit/2.0.1/next-noreset-1.css">
+<link rel="stylesheet" href="//laz-g-cdn.alicdn.com/lzd/assets/0.0.7/dpl-buyeruikit/2.0.1/next-noreset-2.css">
+<link rel="stylesheet" href="//laz-g-cdn.alicdn.com/lzdfe/order/2.3.20/pages/order-management/index.css">
 
-            <li class="">
-                <a th:href="@{'/admin/transactions'}">
-                    <i class="fa fa-money"></i> <span>[[#{transaction}]]</span>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{'/admin/categories'}">
-                    <i class="fa fa-files-o"></i>
-                    <span>[[#{category}]]</span>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{'/admin/products'}">
-                    <i class="fa fa-th"></i> <span>[[#{product}]]</span>
-                </a>
-            </li>
-            <li class="">
-                <a th:href="@{'/admin/keywords'}">
-                    <i class="fa fa-key"></i>
-                    <span>[[#{keyword}]]</span>
-                </a>
-            </li>
-            <li class="">
-                <a th:href="@{'/admin/users'}">
-                    <i class="fa fa-user"></i>
-                    <span>[[#{user}]]</span>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{'/admin/ratings'}">
-                    <i class="fa fa-star"></i> <span>[[#{rating}]]</span>
-                </a>
-            </li>
-        </ul>
-    </section>
-    <!-- /.sidebar -->
-</aside>
+<link rel="stylesheet" href="//laz-g-cdn.alicdn.com/lzd/assets/0.0.6/dpl-buyeruikit/2.0.1/next-noreset-1.css">
+<link rel="stylesheet"
+      href="//laz-g-cdn.alicdn.com/lzd/assets/0.0.6/dpl-buyeruikit/2.0.1/next-noreset-2.css">
+<link rel="stylesheet"
+      href="//laz-g-cdn.alicdn.com/lzdfe/order/2.3.36/pages/reverse-result/index.css">
+<link rel="stylesheet" href="//laz-g-cdn.alicdn.com/lzdfe/account/3.4.33/pages/profile-pc/index.css">
+
+<link rel="stylesheet" href="//laz-g-cdn.alicdn.com/lzdfe/address/3.2.14/lib/next-noreset-1.css">
+<link rel="stylesheet" href="//laz-g-cdn.alicdn.com/lzdfe/address/3.2.14/lib/next-noreset-2.css">
+<link rel="stylesheet" href="//laz-g-cdn.alicdn.com/lzdfe/address/3.2.14/pages/address-pc/index.css">
+
+
+<!--$ lzd start --prod -->
+<link rel="stylesheet" href="//laz-g-cdn.alicdn.com/lzdfe/account/3.4.33/lib/next-noreset-1.css">
+<link rel="stylesheet" href="//laz-g-cdn.alicdn.com/lzdfe/account/3.4.33/lib/next-noreset-2.css">
+<link rel="stylesheet" href="//laz-g-cdn.alicdn.com/lzdfe/account/3.4.33/pages/change-password-pc/index.css">
+<style>
+    #commonHead a, #header a {
+        color: white !important;
+    }
+    #footer a {
+        color: black !important;
+    }
+</style>
+<div class="member-info sub" style="font-size:18px;margin-top:2px">
+    <span>Xin chào, </span>
+    <span id="lzd_current_logon_user_name">
+        [[${@commonConfigurations.getCurrentUser.getName()}]]
+    </span>
+</div>
+<ul class="nav-container">
+    <li class="item" id="Manage-My-Account">
+        </li>
+    <li class="item">
+    <li class="sub" style="margin-top: 25px">
+        <a th:href="@{'/profile'}">
+            <span>Thông tin cá nhân</span>
+        </a>
+    </li>
+    <li class="sub">
+        <a th:href="@{'/profile/orders'}">
+            <span>Đơn hàng của tôi</span>
+        </a>
+    </li>
+    <li class="item" id="My-Orders">
+        <a th:href="@{'/profile/favourite'}">
+            <span>Sản phẩm yêu thích</span>
+        </a>
+    </li>
+</ul>

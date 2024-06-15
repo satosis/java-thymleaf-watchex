@@ -11,6 +11,7 @@ import com.example.watchex.service.ProductService;
 import com.example.watchex.service.UserFavouriteService;
 import com.example.watchex.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -39,28 +40,50 @@ public class ProductController {
 
     @GetMapping("")
     public String index(@RequestParam Map<String, String> params, Model model, RedirectAttributes ra) {
-        User user = CommonUtils.getCurrentUser();
         List<Category> categories = categoryService.getAll();
-        List<ProductDto> products = productService.getProductsByCategory(1, 100);
+        Page<ProductDto> products = productService.get(params);
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
+        model.addAttribute("currentPage", params.get("page") != null ? Integer.parseInt(params.get("page")) : 1);
+        model.addAttribute("totalPages", products.getTotalPages());
+        model.addAttribute("totalItems", products.getTotalElements());
+        model.addAttribute("price", params.get("price") != null ? params.get("price") : 0);
+        model.addAttribute("sort", params.get("sort") != null ? params.get("sort") : 0);
         model.addAttribute("title", "Kết quả tìm kiếm cho " + params.get("keyword"));
+        model.addAttribute("models", "/product?keyword=" + params.get("keyword") );
         return "product/list";
     }
     @GetMapping("/{slug}")
     public String detail(@PathVariable("slug") String slug, Model model, RedirectAttributes ra) {
-        User user = CommonUtils.getCurrentUser();
         List<Category> categories = categoryService.getAll();
         ProductDto product = productService.findBySlug(slug);
         List<ProductDto> productSuggest = productService.getProductsByCategory(product.getCategory().getId(), 3);
         UserFavourite userFavourite = userFavouriteService.getByProductId(product);
         String[] tags= product.getKeywordseo().split(",");
-        model.addAttribute("user", user);
+        model.addAttribute("categories", categories);
         model.addAttribute("product", product);
         model.addAttribute("categories", categories);
         model.addAttribute("productSuggest", productSuggest);
         model.addAttribute("userFavourite", userFavourite);
         model.addAttribute("tags", tags);
         return "product/detail";
+    }
+
+    @GetMapping("/category/{slug}")
+    public String category(@PathVariable("slug") String slug, @RequestParam Map<String, String> params, Model model, RedirectAttributes ra) {
+        List<Category> categories = categoryService.getAll();
+        Category category = categoryService.findBySlug(slug);
+        Page<ProductDto> products = productService.findBySlugCategory(slug, params);
+        model.addAttribute("products", products);
+        model.addAttribute("categories", categories);
+        model.addAttribute("currentPage", params.get("page") != null ? Integer.parseInt(params.get("page")) : 1);
+        model.addAttribute("totalPages", products.getTotalPages());
+        model.addAttribute("totalItems", products.getTotalElements());
+        model.addAttribute("price", params.get("price") != null ? params.get("price") : 0);
+        model.addAttribute("sort", params.get("sort") != null ? params.get("sort") : 0);
+        model.addAttribute("sort", params.get("sort") != null ? params.get("sort") : 0);
+        model.addAttribute("title", category.getC_name());
+        model.addAttribute("models", "/product/category/" + slug);
+        return "product/list";
     }
 }

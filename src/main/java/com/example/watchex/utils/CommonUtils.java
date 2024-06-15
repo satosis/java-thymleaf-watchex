@@ -2,10 +2,13 @@ package com.example.watchex.utils;
 
 import com.example.watchex.dto.SearchDto;
 import com.example.watchex.entity.Admin;
+import com.example.watchex.entity.Category;
 import com.example.watchex.entity.User;
+import com.example.watchex.service.CategoryService;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,6 +25,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public class CommonUtils {
+    private static final CategoryService categoryService = new CategoryService();
     private static final Pattern WHITESPACE = Pattern.compile("[\\s]");
     private static final Pattern IMAGE = Pattern.compile("[^\\w-.]");
     public static String toSlug(String name) {
@@ -433,4 +437,5 @@ public class CommonUtils {
         }
         return buffer.toString();
     }
+
 }

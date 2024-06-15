@@ -24,7 +24,6 @@ public class HomeController {
     private ProductService productService;
     @GetMapping("")
     public String index(Model model) {
-        User user = CommonUtils.getCurrentUser();
         List<Category> categories = categoryService.getAll();
         List<Product> products = productService.getAll();
         List<ProductDto> productsAccessoriess = productService.getProductsAccessoriess();
@@ -38,7 +37,6 @@ public class HomeController {
         List<ProductDto> listProduct6 = productService.getProductsByCategory(6, 15);
         List<ProductDto> listProduct7 = productService.getProductsByCategory(7, 15);
 
-        model.addAttribute("user", user);
         model.addAttribute("categories", categories);
         model.addAttribute("products", products);
         model.addAttribute("productsAccessoriess", productsAccessoriess);

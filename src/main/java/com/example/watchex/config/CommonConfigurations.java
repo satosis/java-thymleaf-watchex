@@ -1,5 +1,8 @@
 package com.example.watchex.config;
 
+import com.example.watchex.entity.User;
+import com.example.watchex.service.CategoryService;
+import com.example.watchex.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -51,6 +54,11 @@ public class CommonConfigurations implements WebMvcConfigurer {
             return String.format("%,.2f", formatPrice);
         }
         return String.format("%,.0f", formatPrice);
+    }
+
+    @Autowired
+    public static User getCurrentUser() {
+        return CommonUtils.getCurrentUser();
     }
 
 }

@@ -1,0 +1,66 @@
+<title>[[${@commonConfigurations.getCurrentUser.getName()}]]</title>
+<div th:include="/fragments/user/header"></div>
+<div class="lzd-playground-main">
+    <div th:include="/fragments/user/sidebar" class="lzd-playground-nav"></div>
+    <div class="lzd-playground-right">
+        <div class="breadcrumb"><a>Thông tin cá nhân</a></div>
+        <div id="container" class="container">
+            <div class="my-profile">
+                <img class="profile-user-img img-responsive img-circle" th:src="${@commonConfigurations.getCurrentUser.getAvatar()}" style="width:100px;height:100px;border-radius: 50%;" alt="User profile picture">
+                <div class="my-profile-bd">
+                    <div class="my-profile-item" style="margin-top: 10px">
+                        <h3 class="my-profile-item-title">Họ tên</h3>
+                        <div class="my-profile-item-info">
+                            [[${@commonConfigurations.getCurrentUser.getName()}]]
+                        </div>
+                    </div>
+                    <div class="my-profile-item">
+                        <h3 class="my-profile-item-title"><span>Địa chỉ email</span></h3>
+                        <div class="my-profile-item-info">
+                            [[${@commonConfigurations.getCurrentUser.getEmail()}]]
+                        </div>
+                    </div>
+                    <div class="my-profile-item">
+                        <h3 class="my-profile-item-title">Số điện thoại</h3>
+                        <div class="my-profile-item-info"><span
+                                class="gray">
+                             [[${@commonConfigurations.getCurrentUser.getPhone()}]]
+                        </span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="my-profile-item">
+                        <h3 class="my-profile-item-title">Địa chỉ</h3>
+                        <div class="my-profile-item-info"><span
+                                class="gray">
+                             [[${@commonConfigurations.getCurrentUser.getAddress()}]]
+                        </span>
+                        </div>
+                    </div>
+                    <div class="my-profile-item">
+                        <h3 class="my-profile-item-title">Ngày sinh</h3>
+                        <div class="my-profile-item-info"><span
+                                class="gray">
+                             [[${@commonConfigurations.getCurrentUser.getBirthday()}]]
+                        </span>
+                        </div>
+                    </div>
+                    <div class="my-profile-item">
+                        <h3 class="my-profile-item-title">Giới tính</h3>
+                        <div class="my-profile-item-info"><span
+                                class="gray">
+                             [[${@commonConfigurations.getCurrentUser.getGender() == 1 ? 'Nữ' : 'Nam'}]]
+                        </span>
+                        </div>
+                    </div>
+                    <a th:href="@{'/profile/edit'}">
+                        <button type="button" class="next-btn next-btn-warning next-btn-normal next-btn-large">
+                            SỬA THÔNG TIN
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="/fragments/user/footer"></div>

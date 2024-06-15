@@ -26,8 +26,7 @@ public class User implements UserDetails {
     @Column(length = 45, nullable = false)
     private String name;
 
-    @Lob
-    private Blob avatar;
+    private String avatar;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -51,10 +50,14 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    public byte[] getAvatar() throws SQLException {
-        byte [] imageBytes = null;
-        imageBytes = avatar.getBytes(1,(int) avatar.length());
-        return imageBytes;
+    public String getAvatar() {
+        String[] partsCollArr;
+        if (this.avatar != null) {
+            partsCollArr = this.avatar.split("__");
+            String dateAvatar = partsCollArr[0].replace('-', '/');
+            return "http://localhost:8081/uploads/" + dateAvatar + "/" + this.avatar;
+        }
+        return "http://localhost:8081/view/img/no-image.png";
     }
     public void setPassword(String password) {
         this.password = CommonUtils.encode(password);

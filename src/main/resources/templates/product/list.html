@@ -11,32 +11,32 @@
                     <span>Giá: </span>
                     <div class="lstPrice">
                         <ul>
-                            <li th:class="${param.price} == 1 ? 'active' : ''">
+                            <li th:class="${price.equals('1')} ? 'active' : ''">
                                 <a href="{{ request()->fullUrlWithQuery(['price' => 1]  ) }} ">
                                     Dưới 2 triệu
                                 </a>
                             </li>
 
-                            <li th:class="${param.price} == '2' ? 'active' : ''">
+                            <li th:class="${price.equals('2')} ? 'active' : ''">
                                 <a href="{{ request()->fullUrlWithQuery(['price' => 2]  ) }} ">
                                     Từ 2 triệu - 5 triệu
                                 </a>
                             </li>
 
-                            <li th:class="${param.price} == '5' ? 'active' : ''">
+                            <li th:class="${price.equals('5')} ? 'active' : ''">
                                 <a href="{{ request()->fullUrlWithQuery(['price' => 5]  ) }} ">
                                     Từ 5 triệu - 10 triệu
                                 </a>
                             </li>
 
-                            <li th:class="${param.price} == '10' ? 'active' : ''">
+                            <li th:class="${price.equals('10')} ? 'active' : ''">
                                 <a href="{{ request()->fullUrlWithQuery(['price' => 10]  ) }} ">
                                     Từ 10 triệu - 25 triệu
                                 </a>
                             </li>
 
 
-                            <li th:class="${param.price} == '50' ? 'active' : ''">
+                            <li th:class="${price.equals('50')} ? 'active' : ''">
                                 <a href="{{ request()->fullUrlWithQuery(['price' => 50]  ) }} ">
                                     Trên 50 triệu
                                 </a>
@@ -51,20 +51,23 @@
                             <div class="group">
                                 <ul>
                                     <li>
-                                        <label th:class="${param.s} == '1' ? 'active' : ''">
+                                        <label th:class="${sort.equals('0')} ? 'active' : ''">
                                             <span class="check"><i class="fa fa-check"></i></span>
-                                            <span><a href="#" title="San pham noi bat">Sản phẩm nổi bật</a></span>
+                                            <span><a href="#" title="Sản phẩm nổi bật">Sản phẩm nổi bật</a></span>
                                         </label>
                                     </li>
                                     <li>
-                                        <label th:class="${param.s} == '2' ? 'active' : ''">
+                                        <label th:class="${sort.equals('1')} ? 'active' : ''">
                                             <span class="check"><i class="fa fa-check"></i></span>
-                                            <span><a href="{{ request()->fullUrlWithQuery(['s' => 2]  ) }}"
-                                                     title="Thap den cao">Giá thấp đến cao</a></span>
+                                            <span>
+                                                <a href="{{ request()->fullUrlWithQuery(['s' => 2]  ) }}"
+                                                     title="Thap den cao">Giá thấp đến cao
+                                                </a>
+                                            </span>
                                         </label>
                                     </li>
                                     <li>
-                                        <label th:class="${param.s} == '3' ? 'active' : ''">
+                                        <label th:class="${sort.equals('2')} ? 'active' : ''">
                                             <span class="check"><i class="fa fa-check"></i></span>
                                             <span><a href="{{ request()->fullUrlWithQuery(['s' => 1]  ) }}"
                                                      title="Cao xuong thap">Giá cao xuống thấp</a></span>
@@ -82,7 +85,7 @@
         <div class="product">
             <div class="group active" th:if="${products.isEmpty()}">
                 <div class="text-center">
-                    <img th:src="@{/view/img/no_result.jpg}" alt="No result"/>
+                    <img th:src="@{/view/no_result.jpg}" alt="No result"/>
                 </div>
             </div>
 

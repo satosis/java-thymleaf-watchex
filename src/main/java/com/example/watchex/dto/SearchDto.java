@@ -13,11 +13,12 @@ import java.io.Serializable;
 public class SearchDto implements Serializable {
     private Integer id;
     private Boolean voided;
-    private Integer shopId;
+    private Integer price;
+    private Integer sort;
     private Integer pageIndex=0;
     private Integer pageSize=5;
     private String keyword;
-    private String  asc;
+    private String asc;
     private String desc="createdDate";
     public SearchDto(Integer pageSize,Integer pageIndex){
         this.pageSize = pageSize;

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
@@ -28,10 +27,7 @@ public class AdminServiceImpl extends GenericServiceImpl<Admin, Integer> impleme
     @Override
     public Admin show(Integer id) throws UserPrincipalNotFoundException {
         Optional<Admin> result = repository.findById(id);
-        if (result.isPresent()) {
-            return result.get();
-        }
-        throw new UserPrincipalNotFoundException("Tài khoản không tồn tại");
+        return result.orElse(null);
     }
 
     @Override
@@ -42,9 +38,6 @@ public class AdminServiceImpl extends GenericServiceImpl<Admin, Integer> impleme
     @Override
     public Admin findByEmail(String email) {
         Optional<Admin> result = Optional.ofNullable(repository.findByEmail(email));
-        if (result.isPresent()) {
-            return result.get();
-        }
-        throw new UsernameNotFoundException("Tài khoản không tồn tại");
+        return result.orElse(null);
     }
 }

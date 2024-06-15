@@ -307,7 +307,7 @@ span a { -webkit-transition: none; transition: none; }
 #commonBot .right li {margin: 0 7px}
 
 .product3 { background: #f0eeee; margin: 0; padding: 15px 0; margin-top: -40px}
-.product3 .wrp { display: flex; background: #fff;height: 380px;}
+.product3 .wrp { display: flex; background: #fff}
 .product3 .bannerMain { width: 264px; position: relative}
 .product3 .bannerMain .info { position: absolute; top: 40px; left: 0; pointer-events: none; z-index: 5; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%}
 .product3 .bannerMain .info .name { color: #fff; font-family: RobotoB; text-transform: uppercase; padding: 0 20px; font-size: 20px; text-align: center; margin-bottom: 13px; line-height: 27px}
@@ -327,7 +327,7 @@ button{outline:none}
 #pageway ul li { display: flex; align-items: center; line-height: 20px}
 #pageway ul li:last-child:after {display: none}
 
-#container { background: #e5e5e5; padding-bottom: 30px}
+#container { padding-bottom: 30px}
 #menuCate {padding: 10px 0}
 #menuCate .wrp { background: #fff}
 #menuCate .group { display: flex; flex-wrap: wrap}
@@ -371,6 +371,9 @@ button{outline:none}
 #filter .order .price li,
 #filter .order .price > span { white-space: nowrap }
 #filter .order span, #filter .order .active { color: #288ad6; cursor: pointer; margin-right: 7px; }
+.li_active {
+   color: #288ad6
+}
 #filter .order .right { display: flex }
 #filter .order .right .function { margin-right: 10px; position: relative }
 #filter .order .right .function:last-child {margin-right: 0}
@@ -572,4 +575,20 @@ legend{
    height: 100%;
    background-color: #FFF;
    z-index: 100000
+}
+.mod-input select {
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+   width: 100%;
+   border: 1px solid #ddd;
+   font-size: 14px;
+   height: 40px;
+   line-height: 38px \0;
+   padding: 0 35px 0 10px;
+   margin-bottom: 2px;
+   outline: none;
+}
+
+.text-danger {
+   color: red;
 }

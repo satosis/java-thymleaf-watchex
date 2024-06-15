@@ -10,14 +10,13 @@ import com.example.watchex.entity.Token;
 import com.example.watchex.exceptions.MessageEntity;
 import com.example.watchex.service.AdminJwtService;
 import com.example.watchex.service.AdminService;
-import com.example.watchex.service.EmailSenderService;
 import com.example.watchex.service.TokenService;
 import com.example.watchex.utils.AdminJwtUtils;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -26,8 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
-@RestController
-@RequiredArgsConstructor
+
+@Controller
 @RequestMapping("/admin-auth/")
 public class AdminAuthController {
 
@@ -36,20 +35,19 @@ public class AdminAuthController {
 
     @Autowired
     private TokenService tokenService;
-    private final AdminJwtUtils jwtUtil;
+    private AdminJwtUtils jwtUtil;
 
-    private final AdminJwtService jwtService;
+    private AdminJwtService jwtService;
 
-    @Autowired
-    private EmailSenderService emailService;
-
-    @GetMapping("auth/login")
-    public String loginForm(Model model, LoginDto loginDt0) {
-        model.addAttribute("loginDto", loginDt0);
+    @GetMapping("login")
+    public String loginForm(Model model, LoginDto loginDto) {
+        loginDto.setEmail("admin@gmail.com");
+        loginDto.setPassword("123456789");
+        model.addAttribute("loginDto", loginDto);
         return "admin/auth/login";
     }
 
-    @PostMapping("auth/checklogin")
+    @PostMapping("checklogin")
     public String login(@Valid @ModelAttribute("loginDto") LoginDto loginDto,
                         BindingResult result
     ) throws MethodArgumentNotValidException, UsernameNotFoundException {
@@ -58,10 +56,14 @@ public class AdminAuthController {
         }
         AuthenticationResponse jwt;
         Admin admin = adminService.findByEmail(loginDto.getEmail());
-
+        if (admin == null) {
+            result.rejectValue("email", "error.email", "Tài khoản không tồn tại !");
+            return "admin/auth/login";
+        }
         boolean checkPassword = new BCryptPasswordEncoder().matches(loginDto.getPassword(), admin.getPassword());
         if (!checkPassword) {
-            throw new UsernameNotFoundException("Tài khoản hoặc mật khẩu không chính xác !");
+            result.rejectValue("email", "error.email", "Tài khoản hoặc mật khẩu không chính xác !");
+            return "admin/auth/login";
         }
         String jwtToken = jwtService.generateToken(admin);
         String refreshToken = jwtService.generateRefreshToken(admin);
@@ -75,7 +77,7 @@ public class AdminAuthController {
                 .build();
 
 
-        return "redirect:/home";
+        return "redirect:/admin";
 //        return ResponseEntity.ok(new MessageEntity(200, jwt));
     }
 

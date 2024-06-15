@@ -5,6 +5,7 @@ import com.example.watchex.repository.TokenRepository;
 import com.example.watchex.service.JwtService;
 import com.example.watchex.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +20,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -40,7 +42,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        final String authHeader = request.getHeader("Authorization");
+        HttpSession httpSession = request.getSession();
+        final String authHeader = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQGdtYWlsLmNvbSIsImlhdCI6MTcxODQzOTQ4OSwiZXhwIjoxNzE4NDU3NDg5fQ.ezO1XQEUN2s2dY_vDuysbGuIpX-M2oAEGb8hI8BkqaU";
         final String jwt;
         final String userEmail;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {

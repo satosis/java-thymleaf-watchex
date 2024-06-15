@@ -39,4 +39,8 @@ public class CategoryService {
     public void delete(Integer id) {
         repository.deleteById(id);
     }
+    public Category findBySlug(String slug) {
+        return repository.findBySlug(slug);
+    }
+
 }

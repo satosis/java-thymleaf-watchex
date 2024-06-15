@@ -1,7 +1,6 @@
 package com.example.watchex.service;
 
 import com.example.watchex.entity.Admin;
-import com.example.watchex.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -69,9 +68,9 @@ public class AdminJwtService {
                 .compact();
     }
 
-    public boolean isTokenValid(String token, User user) {
+    public boolean isTokenValid(String token, Admin admin) {
         final String username = extractUsername(token);
-        return (username.equals(user.getEmail())) && !isTokenExpired(token);
+        return (username.equals(admin.getEmail())) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {

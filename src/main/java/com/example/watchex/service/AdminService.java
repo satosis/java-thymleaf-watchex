@@ -1,7 +1,6 @@
 package com.example.watchex.service;
 
 import com.example.watchex.entity.Admin;
-import com.example.watchex.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,5 +15,5 @@ public interface AdminService extends GenericService<Admin, Integer> {
 
     boolean existsByEmail(String email);
 
-    Admin findByEmail(String email) throws UsernameNotFoundException;
+    Admin findByEmail(String email) ;
 }

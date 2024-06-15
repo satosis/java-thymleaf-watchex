@@ -10,6 +10,8 @@ import com.example.watchex.entity.User;
 import com.example.watchex.service.*;
 import com.example.watchex.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -45,11 +50,6 @@ public class AuthController {
     @Autowired
     private EmailSenderService emailService;
 
-    @ModelAttribute("loginDto")
-    public LoginDto loginDto() {
-        return new LoginDto();
-    }
-
     @ModelAttribute("registerDto")
     public RegisterDto registerDto() {
         return new RegisterDto();
@@ -61,15 +61,20 @@ public class AuthController {
     }
 
     @GetMapping("auth/login")
-    public String loginForm(Model model) {
+    public String loginForm(Model model, LoginDto loginDto) {
         List<Category> categories = categoryService.getAll();
+        model.addAttribute("categories", categories);
+        model.addAttribute("loginDto", loginDto);
+        loginDto.setEmail("user@gmail.com");
+        loginDto.setPassword("123456789");
         model.addAttribute("categories", categories);
 
         return "auth/login";
     }
 
     @PostMapping("auth/login")
-    public String login(@Valid @ModelAttribute("loginDto") LoginDto loginDto,
+    public String login(@NonNull HttpServletRequest request,
+                        @Valid @ModelAttribute("loginDto") LoginDto loginDto,
                         BindingResult result)
             throws MethodArgumentNotValidException, UsernameNotFoundException {
         AuthenticationResponse jwt;
@@ -90,14 +95,13 @@ public class AuthController {
         String refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-
         jwt = AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .user(user)
                 .build();
-
-
+        HttpSession httpSession = request.getSession();
+        httpSession.setAttribute("Authorization", "Bearer " + jwtToken);
         return "redirect:/";
 //        return ResponseEntity.ok(new MessageEntity(200, jwt));
     }

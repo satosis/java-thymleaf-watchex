@@ -2,10 +2,10 @@
 <title>Đăng nhập</title>
 <div class="container"><br>
     <div class="login">
-        <h1 class="{{ isset($reset) ? 'd-none' :'' }} text-center">ĐĂNG NHẬP BẰNG</h1><br><br>
-        <a href="{{ url('/auth/redirect/facebook') }}" class="btn btn-blue"><i
+        <h1 class="text-center">ĐĂNG NHẬP BẰNG</h1><br><br>
+        <a th:href="@{'/user/auth/fa-facebook'}" class="btn btn-blue"><i
                     class="fa fa-facebook-f mr-1"></i> FACEBOOK</a>
-        <a href="{{url('/auth/redirect/google')}}" class="btn btn-red"><i
+        <a th:href="@{'/user/auth/fa-fa-google'}" class="btn btn-red"><i
                     class="fa fa-google"></i> GOOGLE</a><br>
         <br>
         <h1 class="">HOẶC ĐĂNG NHẬP BẰNG</h1><br>
