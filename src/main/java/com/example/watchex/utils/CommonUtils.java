@@ -19,6 +19,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.NumberUtils;
 
 import org.springframework.data.domain.Pageable;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -438,4 +445,22 @@ public class CommonUtils {
         return buffer.toString();
     }
 
+    public static void setCookie(HttpServletResponse response, String nom, String value) throws Exception {
+        Cookie cookie = new Cookie( nom, URLEncoder.encode( value, "UTF-8" ) );
+        cookie.setMaxAge( 60*60 );
+        response.addCookie( cookie );
+    }
+
+    public static String getCookie(HttpServletRequest request, String name) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(name)) {
+                    String value = cookie.getValue();
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
 }

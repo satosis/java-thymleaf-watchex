@@ -7,6 +7,7 @@ import com.example.watchex.service.AdminJwtService;
 import com.example.watchex.service.AdminService;
 import com.example.watchex.service.JwtService;
 import com.example.watchex.service.UserService;
+import com.example.watchex.utils.CommonUtils;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
@@ -23,6 +24,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
@@ -54,7 +56,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        final String authHeader = request.getHeader("Authorization");
+        HttpSession httpSession = request.getSession(true);
+        String session = (String) httpSession.getAttribute("Authorization");
+        final String authHeader = session;
         final String jwt;
         final String userEmail;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {

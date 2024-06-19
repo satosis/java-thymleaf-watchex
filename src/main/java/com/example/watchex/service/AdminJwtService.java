@@ -70,6 +70,9 @@ public class AdminJwtService {
 
     public boolean isTokenValid(String token, Admin admin) {
         final String username = extractUsername(token);
+        if (admin == null) {
+            return false;
+        }
         return (username.equals(admin.getEmail())) && !isTokenExpired(token);
     }
 

@@ -8,9 +8,9 @@ import com.example.watchex.entity.Category;
 import com.example.watchex.entity.Token;
 import com.example.watchex.entity.User;
 import com.example.watchex.service.*;
+import com.example.watchex.utils.CommonUtils;
 import com.example.watchex.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,11 +18,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -73,10 +77,10 @@ public class AuthController {
     }
 
     @PostMapping("auth/login")
-    public String login(@NonNull HttpServletRequest request,
+    public String login(HttpServletRequest request,
                         @Valid @ModelAttribute("loginDto") LoginDto loginDto,
                         BindingResult result)
-            throws MethodArgumentNotValidException, UsernameNotFoundException {
+            throws Exception {
         AuthenticationResponse jwt;
         User user = userService.findByEmail(loginDto.getEmail());
         if (user == null) {
@@ -100,8 +104,8 @@ public class AuthController {
                 .refreshToken(refreshToken)
                 .user(user)
                 .build();
-        HttpSession httpSession = request.getSession();
-        httpSession.setAttribute("Authorization", "Bearer " + jwtToken);
+        HttpSession session = request.getSession();
+        session.setAttribute("Authorization", "Bearer " + jwtToken);
         return "redirect:/";
 //        return ResponseEntity.ok(new MessageEntity(200, jwt));
     }
