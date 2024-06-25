@@ -53,10 +53,14 @@ public class ProfileController {
     }
 
     @PostMapping("/edit")
-    public String register(@Valid @ModelAttribute("editProfileDto") EditProfileDto editProfileDto, BindingResult result) throws SQLException, IOException, MessagingException {
+    public String register(@Valid @ModelAttribute("editProfileDto") EditProfileDto editProfileDto, BindingResult result) throws Exception, IOException, MessagingException {
         User user = CommonUtils.getCurrentUser();
         if (result.hasErrors()) {
             return "user/edit";
+        }
+        if (editProfileDto.getAvatar() != null) {
+            String path = CommonUtils.saveImageToStorage("user", editProfileDto.getAvatar());
+            user.setAvatar(path);
         }
         if (!Objects.equals(editProfileDto.getPassword(), "")) {
             boolean checkSamePassword = editProfileDto.getRe_password().equals(editProfileDto.getPassword());

@@ -5,8 +5,6 @@ import com.example.watchex.entity.Admin;
 import com.example.watchex.entity.User;
 import com.example.watchex.service.CategoryService;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +16,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.NumberUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -356,16 +359,9 @@ public class CommonUtils {
         }
     }
 
-    public static DateTime getDate(DateTime input, String timeTrail) {
-        DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-        String dtStr = String.valueOf(input.getYear());
-        dtStr = dtStr + "-";
-        dtStr = dtStr + input.getMonthOfYear();
-        dtStr = dtStr + "-";
-        dtStr = dtStr + input.getDayOfMonth();
-        dtStr = dtStr + " ";
-        dtStr = dtStr + timeTrail;
-        return dtf.parseDateTime(dtStr);
+    public static String getDate(Date date, String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        return formatter.format(date);
     }
 
     public static DateTime getDateWithoutTimezone(DateTime input) {
@@ -463,4 +459,32 @@ public class CommonUtils {
         return null;
     }
 
+    public static String saveImageToStorage(String folder, MultipartFile imageFile) throws Exception {
+        String uploadDirectory = "src/main/resources/static/uploads/";
+        if (folder != null) {
+            uploadDirectory = uploadDirectory + folder + "/";
+        }
+        String uniqueFileName = getDate(new Date(), "yyyy-MM-dd") + "__" +  UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();;
+        Path uploadPath = Path.of(uploadDirectory + getDate(new Date(), "yyyy/MM/dd") );
+        Path filePath = uploadPath.resolve(uniqueFileName);
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        return uniqueFileName;
+    }
+
+    // Delete an image
+    public static String deleteImage(String imageDirectory, String imageName) throws IOException {
+        Path imagePath = Path.of(imageDirectory, imageName);
+
+        if (Files.exists(imagePath)) {
+            Files.delete(imagePath);
+            return "Success";
+        } else {
+            return "Failed"; // Handle missing images
+        }
+    }
 }

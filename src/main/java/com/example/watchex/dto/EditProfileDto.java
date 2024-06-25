@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @AllArgsConstructor
@@ -15,6 +16,8 @@ public class EditProfileDto {
     private String name;
 
     private String password;
+    private MultipartFile avatar;
+
     private String oldpassword;
     private String re_password;
 
