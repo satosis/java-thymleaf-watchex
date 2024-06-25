@@ -10,8 +10,8 @@
                 <div class="col-sm-4">
                     <div class="box box-warning">
                         <div class="box-body block-images">
-                            <div style="margin-bottom: 10px" class="image-area">
-                                <img th:src="${@commonConfigurations.getCurrentUser.getAvatar()}" class="img-thumbnail" alt="User profile picture" />
+                            <div class="image-area">
+                                <img th:src="${@commonConfigurations.getCurrentUser.getAvatar()}" class="img-circle" alt="User profile picture" />
                             </div>
                             <input type="file" name="avatar" size="40" class="d-none js-upload imageID"
                                    id="thumbnail-stage"> &nbsp;

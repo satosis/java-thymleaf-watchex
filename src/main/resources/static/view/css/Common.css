@@ -680,3 +680,20 @@ legend{
    border-radius: 10px;
    background-color: red
 }
+
+.img-circle {
+   height: 100px;
+   width: 100px;
+   border-radius: 50%;
+}
+
+.image-area { position: relative;}
+.remove-image-function {
+   position: absolute;
+   background: red;
+   color: white;
+   padding: 0px 5px;
+   border-radius: 50%;
+   font-size: 25px;
+   top: -15px;
+}

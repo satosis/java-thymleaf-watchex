@@ -477,8 +477,8 @@ public class CommonUtils {
     }
 
     // Delete an image
-    public static String deleteImage(String imageDirectory, String imageName) throws IOException {
-        Path imagePath = Path.of(imageDirectory, imageName);
+    public static String deleteImage(String imageName) throws IOException {
+        Path imagePath = Path.of("src/main/resources/static/" + imageName);
 
         if (Files.exists(imagePath)) {
             Files.delete(imagePath);

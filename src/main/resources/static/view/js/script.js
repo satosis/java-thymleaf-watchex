@@ -11,7 +11,7 @@ $(document).on('change', 'input.imageID', function (event) {
     reader.onload = function (e) {
         image_area.append(`
             <a class="remove-image d-block remove-image-function">&#215;</a>
-            <img src="${e.target.result}" class="img-thumbnail"  alt="Image preview...">
+            <img src="${e.target.result}" class="img-circle" alt="Image preview...">
         `);
     };
     reader.readAsDataURL(this.files[0]);

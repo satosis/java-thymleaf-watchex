@@ -16,7 +16,7 @@ public class EditProfileDto {
     private String name;
 
     private String password;
-    private MultipartFile avatar;
+    private MultipartFile avatar = null;
 
     private String oldpassword;
     private String re_password;

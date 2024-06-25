@@ -1,14 +1,9 @@
 package com.example.watchex.controller;
 
 import com.example.watchex.dto.EditProfileDto;
-import com.example.watchex.dto.JwtResponse;
-import com.example.watchex.dto.LoginDto;
-import com.example.watchex.dto.RegisterDto;
 import com.example.watchex.entity.Category;
-import com.example.watchex.entity.Token;
 import com.example.watchex.entity.User;
 import com.example.watchex.service.CategoryService;
-import com.example.watchex.service.ProductService;
 import com.example.watchex.service.UserService;
 import com.example.watchex.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,7 +52,8 @@ public class ProfileController {
         if (result.hasErrors()) {
             return "user/edit";
         }
-        if (editProfileDto.getAvatar() != null) {
+        if (!Objects.equals(editProfileDto.getAvatar().getOriginalFilename(), "")) {
+            CommonUtils.deleteImage(user.getOriginalAvatar());
             String path = CommonUtils.saveImageToStorage("user", editProfileDto.getAvatar());
             user.setAvatar(path);
         }
