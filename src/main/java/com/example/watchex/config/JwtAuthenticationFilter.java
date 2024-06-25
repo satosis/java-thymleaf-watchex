@@ -56,12 +56,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        HttpSession httpSession = request.getSession(true);
-        String session = (String) httpSession.getAttribute("Authorization");
-        final String authHeader = session;
+        final String authHeader = CommonUtils.getCookie(request, "Authorization");
         final String jwt;
         final String userEmail;
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer+")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -71,19 +69,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             var isTokenValid = tokenRepository.findByToken(jwt)
                     .map(t -> !t.isExpired() && !t.isRevoked())
                     .orElse(false);
-            boolean isAdmin = adminService.existsByEmail(userEmail);
-            if (isAdmin) {
-                Admin admin = adminService.findByEmail(userEmail);
-                if (adminJwtService.isTokenValid(jwt, admin) && isTokenValid) {
-                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            admin,
-                            null,
-                            admin.getAuthorities()
-                    );
-                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
-                }
-            } else {
+//            boolean isAdmin = adminService.existsByEmail(userEmail);
+//            if (isAdmin) {
+//                Admin admin = adminService.findByEmail(userEmail);
+//                if (adminJwtService.isTokenValid(jwt, admin) && isTokenValid) {
+//                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+//                            admin,
+//                            null,
+//                            admin.getAuthorities()
+//                    );
+//                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//                    SecurityContextHolder.getContext().setAuthentication(authToken);
+//                }
+//            } else {
                 User user = userService.findByEmail(userEmail);
                 if (jwtService.isTokenValid(jwt, user) && isTokenValid) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -94,7 +92,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
-            }
+//            }
         }
         filterChain.doFilter(request, response);
     }

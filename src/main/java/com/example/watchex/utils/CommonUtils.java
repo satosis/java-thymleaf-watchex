@@ -2,30 +2,27 @@ package com.example.watchex.utils;
 
 import com.example.watchex.dto.SearchDto;
 import com.example.watchex.entity.Admin;
-import com.example.watchex.entity.Category;
 import com.example.watchex.entity.User;
 import com.example.watchex.service.CategoryService;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.NumberUtils;
-
-import org.springframework.data.domain.Pageable;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -445,10 +442,12 @@ public class CommonUtils {
         return buffer.toString();
     }
 
-    public static void setCookie(HttpServletResponse response, String nom, String value) throws Exception {
-        Cookie cookie = new Cookie( nom, URLEncoder.encode( value, "UTF-8" ) );
-        cookie.setMaxAge( 60*60 );
-        response.addCookie( cookie );
+    public static void setCookie(String key, String value) {
+        Cookie cookie = new Cookie(key, URLEncoder.encode(value, StandardCharsets.UTF_8));
+        cookie.setMaxAge(3600 * 6);
+        cookie.setPath("/");
+        var attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        attributes.getResponse().addCookie(cookie);
     }
 
     public static String getCookie(HttpServletRequest request, String name) {
@@ -463,4 +462,5 @@ public class CommonUtils {
         }
         return null;
     }
+
 }

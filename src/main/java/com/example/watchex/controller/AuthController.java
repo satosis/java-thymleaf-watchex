@@ -65,7 +65,10 @@ public class AuthController {
     }
 
     @GetMapping("auth/login")
-    public String loginForm(Model model, LoginDto loginDto) {
+    public String loginForm(@NonNull HttpServletRequest request, Model model, LoginDto loginDto) {
+        if (CommonUtils.getCookie(request, "Authorization") != null) {
+            return "redirect:/";
+        }
         List<Category> categories = categoryService.getAll();
         model.addAttribute("categories", categories);
         model.addAttribute("loginDto", loginDto);
@@ -104,8 +107,7 @@ public class AuthController {
                 .refreshToken(refreshToken)
                 .user(user)
                 .build();
-        HttpSession session = request.getSession();
-        session.setAttribute("Authorization", "Bearer " + jwtToken);
+        CommonUtils.setCookie("Authorization", "Bearer " + jwtToken);
         return "redirect:/";
 //        return ResponseEntity.ok(new MessageEntity(200, jwt));
     }
@@ -133,7 +135,10 @@ public class AuthController {
     }
 
     @GetMapping("auth/register")
-    public String registerForm(Model model) {
+    public String registerForm(@NonNull HttpServletRequest request, Model model) {
+        if (CommonUtils.getCookie(request, "Authorization") != null) {
+            return "redirect:/";
+        }
         List<Category> categories = categoryService.getAll();
         model.addAttribute("categories",categories);
         return "auth/register";
