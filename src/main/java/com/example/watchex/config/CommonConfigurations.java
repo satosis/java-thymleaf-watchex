@@ -1,7 +1,6 @@
 package com.example.watchex.config;
 
 import com.example.watchex.entity.User;
-import com.example.watchex.service.CategoryService;
 import com.example.watchex.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -10,10 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -61,4 +63,17 @@ public class CommonConfigurations implements WebMvcConfigurer {
         return CommonUtils.getCurrentUser();
     }
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        exposeDirectory("uploads", registry);
+    }
+
+    private void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {
+        Path uploadDir = Paths.get(dirName);
+        String uploadPath = uploadDir.toFile().getAbsolutePath();
+
+        if (dirName.startsWith("../")) dirName = dirName.replace("../", "");
+
+        registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/" + uploadPath + "/");
+    }
 }

@@ -460,7 +460,7 @@ public class CommonUtils {
     }
 
     public static String saveImageToStorage(String folder, MultipartFile imageFile) throws Exception {
-        String uploadDirectory = "src/main/resources/static/uploads/";
+        String uploadDirectory = "uploads/";
         if (folder != null) {
             uploadDirectory = uploadDirectory + folder + "/";
         }
@@ -478,7 +478,7 @@ public class CommonUtils {
 
     // Delete an image
     public static String deleteImage(String imageName) throws IOException {
-        Path imagePath = Path.of("src/main/resources/static/" + imageName);
+        Path imagePath = Path.of("/" + imageName);
 
         if (Files.exists(imagePath)) {
             Files.delete(imagePath);
