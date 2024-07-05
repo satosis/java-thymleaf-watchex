@@ -440,7 +440,11 @@ public class CommonUtils {
 
     public static void setCookie(String key, String value) {
         Cookie cookie = new Cookie(key, URLEncoder.encode(value, StandardCharsets.UTF_8));
-        cookie.setMaxAge(3600 * 6);
+        if (value.isEmpty()) {
+            cookie.setMaxAge(0);
+        } else {
+            cookie.setMaxAge(3600 * 6);
+        }
         cookie.setPath("/");
         var attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         attributes.getResponse().addCookie(cookie);
@@ -451,7 +455,6 @@ public class CommonUtils {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(name)) {
-                    String value = cookie.getValue();
                     return cookie.getValue();
                 }
             }

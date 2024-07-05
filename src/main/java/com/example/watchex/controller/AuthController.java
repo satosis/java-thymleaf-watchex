@@ -214,9 +214,8 @@ public class AuthController {
 //        return "redirect:/auth/login";
 //    }
     @GetMapping("/auth/logout")
-    public String Logout(WebRequest request, SessionStatus status){
-        status.setComplete();// đã hoàn thành
-        request.removeAttribute("userdto",WebRequest.SCOPE_SESSION);
+    public String Logout(){
+        CommonUtils.setCookie("Authorization", "");
         return "redirect:/";
     }
 }
