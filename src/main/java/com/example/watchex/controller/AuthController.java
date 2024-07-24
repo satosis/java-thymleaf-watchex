@@ -69,6 +69,7 @@ public class AuthController {
         if (CommonUtils.getCookie(request, "Authorization") != null) {
             return "redirect:/";
         }
+        loginDto.setPassword("123321");
         List<Category> categories = categoryService.getAll();
         model.addAttribute("categories", categories);
         model.addAttribute("loginDto", loginDto);

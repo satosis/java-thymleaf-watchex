@@ -1,16 +1,19 @@
 package com.example.watchex.service;
 
 import com.example.watchex.dto.ProductDto;
+import com.example.watchex.dto.RatingDto;
 import com.example.watchex.dto.SearchDto;
 import com.example.watchex.entity.Product;
+import com.example.watchex.entity.Rating;
 import com.example.watchex.repository.ProductRepository;
+import com.example.watchex.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

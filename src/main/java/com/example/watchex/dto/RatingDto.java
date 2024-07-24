@@ -8,10 +8,9 @@ import java.util.Date;
 import java.util.Set;
 
 public interface RatingDto {
-    Integer getCountNumber();
 
+    Integer getR_Number();
+    Integer getCount_number();
     Integer getTotal();
-
-    Integer getNumber();
 
 }

@@ -307,7 +307,7 @@ span a { -webkit-transition: none; transition: none; }
 #commonBot .right li {margin: 0 7px}
 
 .product3 { background: #f0eeee; margin: 0; padding: 15px 0; margin-top: -40px}
-.product3 .wrp { display: flex; background: #fff}
+.product3 .wrp { display: flex; background: #fff;height: 370px;}
 .product3 .bannerMain { width: 264px; position: relative}
 .product3 .bannerMain .info { position: absolute; top: 40px; left: 0; pointer-events: none; z-index: 5; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%}
 .product3 .bannerMain .info .name { color: #fff; font-family: RobotoB; text-transform: uppercase; padding: 0 20px; font-size: 20px; text-align: center; margin-bottom: 13px; line-height: 27px}
@@ -589,9 +589,9 @@ legend{
    outline: none;
 }
 
-.text-danger {
-   color: red;
-}
+   .text-danger {
+      color: red;
+   }
 
 .form-control {
    display: block;

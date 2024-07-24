@@ -1,11 +1,13 @@
 package com.example.watchex.controller;
 
 import com.example.watchex.dto.ProductDto;
+import com.example.watchex.dto.RatingDto;
 import com.example.watchex.dto.SearchDto;
 import com.example.watchex.entity.Category;
 import com.example.watchex.entity.Product;
 import com.example.watchex.entity.User;
 import com.example.watchex.entity.UserFavourite;
+import com.example.watchex.repository.RatingRepository;
 import com.example.watchex.service.CategoryService;
 import com.example.watchex.service.ProductService;
 import com.example.watchex.service.UserFavouriteService;
@@ -38,6 +40,9 @@ public class ProductController {
     @Autowired
     private UserFavouriteService userFavouriteService;
 
+    @Autowired
+    private RatingRepository ratingRepository;
+
     @GetMapping("")
     public String index(@RequestParam Map<String, String> params, Model model, RedirectAttributes ra) {
         List<Category> categories = categoryService.getAll();
@@ -57,11 +62,14 @@ public class ProductController {
     public String detail(@PathVariable("slug") String slug, Model model, RedirectAttributes ra) {
         List<Category> categories = categoryService.getAll();
         ProductDto product = productService.findBySlug(slug);
+
+        List<RatingDto> ratings = ratingRepository.getRatingProduct(product.getId());
         List<ProductDto> productSuggest = productService.getProductsByCategory(product.getCategory().getId(), 3);
         UserFavourite userFavourite = userFavouriteService.getByProductId(product);
         String[] tags= product.getKeywordseo().split(",");
         model.addAttribute("categories", categories);
         model.addAttribute("product", product);
+        model.addAttribute("ratings", ratings);
         model.addAttribute("categories", categories);
         model.addAttribute("productSuggest", productSuggest);
         model.addAttribute("userFavourite", userFavourite);

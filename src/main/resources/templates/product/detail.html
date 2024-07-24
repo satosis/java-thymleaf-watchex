@@ -306,37 +306,28 @@
                                 </div>
                                 <div class="count"> [[${product.pro_review_star}]] đánh giá</div>
                             </div>
-                            @foreach($ratingDefault as $key =>$item)
-                            @php
-                            $ageItem=0;
-                            if($product->star >0)
-                            $ageItem = round(($item['count_number'] / $product->star) *100,2);
-                            @endphp
-                            <div class="detail">
+                            <div class="detail" th:each="star: ${#numbers.sequence(1, 5)}">
                                 <ul>
                                     <li>
                                         <div class="container-star progress-title"
-                                             style="width: 79.8px; height: 15.96px;">
-                                            @for($i =1;$i<=$key;$i++)
+                                             style="width: 80px; height: 16px;">
                                             <img class="star"
-                                                 src="//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png">
-                                            @endfor
-                                            @for($j=5;$j>$key;$j--)
+                                                 src="//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png"
+                                                 th:each="i: ${#numbers.sequence(1, star)}" alt="star">
                                             <img class="star"
-                                                 src="//laz-img-cdn.alicdn.com/tfs/TB18ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png">
-                                            @endfor
+                                                 src="//laz-img-cdn.alicdn.com/tfs/TB18ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png"
+                                                 th:each="i: ${#numbers.sequence(star + 1, 5)}" alt="star">
                                         </div>
                                         <span class="progress-wrap">
-                              <div class="pdp-review-progress">
-                                 <div class="bar bg"></div>
-                                 <div class="bar fg" style="width: {{ $ageItem}}%"></div>
-                              </div>
-                           </span>
-                                        <span class="percent"> {{ $item['count_number'] }}</span>
+                                          <div class="pdp-review-progress">
+                                             <div class="bar bg"></div>
+                                             <div class="bar fg" style="width: [[${ratings[star].count_number}]]%"></div>
+                                          </div>
+                                       </span>
+                                        <span class="percent"  th:if="${ratings != null}">[[${ratings}]]</span>
                                     </li>
                                 </ul>
                             </div>
-                            @endforeach
                         </div>
                     </div>
                 </div>
