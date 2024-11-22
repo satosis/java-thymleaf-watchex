@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -489,5 +490,15 @@ public class CommonUtils {
         } else {
             return "Failed"; // Handle missing images
         }
+    }
+
+    public static void setSession(HttpServletRequest request, String key, String value) {
+        HttpSession session = request.getSession();
+        session.setAttribute(key, value);
+    }
+
+    public static Object getSession(HttpServletRequest request, String name) {
+        HttpSession session = request.getSession();
+        return request.getAttribute(name);
     }
 }

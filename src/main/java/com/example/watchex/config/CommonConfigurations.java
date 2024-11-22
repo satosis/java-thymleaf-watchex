@@ -50,8 +50,10 @@ public class CommonConfigurations implements WebMvcConfigurer {
 
     @Autowired
     public static String formatPrice(int price, int sale, int numberDecimal) {
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        Double formatPrice = (double) (((100 - sale) * price) / 100);
+        if (price == 0) {
+            return "0";
+        }
+        Double formatPrice = (double) (price - price * (sale / 100));
         if (numberDecimal > 0) {
             return String.format("%,.2f", formatPrice);
         }

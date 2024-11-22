@@ -1,7 +1,7 @@
 package com.example.watchex.controller.Admin;
 
 import com.example.watchex.common.TokenType;
-import com.example.watchex.controller.AuthenticationResponse;
+import com.example.watchex.response.AuthenticationResponse;
 import com.example.watchex.dto.JwtResponse;
 import com.example.watchex.dto.LoginDto;
 import com.example.watchex.dto.RegisterDto;

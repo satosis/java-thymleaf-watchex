@@ -1,6 +1,7 @@
 package com.example.watchex.controller;
 
 import com.example.watchex.dto.EditProfileDto;
+import com.example.watchex.entity.Cart;
 import com.example.watchex.entity.Category;
 import com.example.watchex.entity.User;
 import com.example.watchex.service.CategoryService;
@@ -16,9 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.mail.MessagingException;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,19 +34,21 @@ public class ProfileController {
     @GetMapping("")
     public String index(Model model) {
         List<Category> categories = categoryService.getAll();
+        model.addAttribute("cartCount", Cart.cart.size());
         model.addAttribute("categories", categories);
         return "user/profile";
     }
 
     @GetMapping("/edit")
-    public String edit(Model model, EditProfileDto editProfileDto) {
+    public String edit(Model model) {
         List<Category> categories = categoryService.getAll();
+        model.addAttribute("cartCount", Cart.cart.size());
         model.addAttribute("categories", categories);
         return "user/edit";
     }
 
     @PostMapping("/edit")
-    public String register(@Valid @ModelAttribute("editProfileDto") EditProfileDto editProfileDto, BindingResult result) throws Exception, IOException, MessagingException {
+    public String register(@Valid @ModelAttribute("editProfileDto") EditProfileDto editProfileDto, BindingResult result) throws Exception {
         User user = CommonUtils.getCurrentUser();
         if (result.hasErrors()) {
             return "user/edit";

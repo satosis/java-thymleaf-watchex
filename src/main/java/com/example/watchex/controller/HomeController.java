@@ -1,6 +1,7 @@
 package com.example.watchex.controller;
 
 import com.example.watchex.dto.ProductDto;
+import com.example.watchex.entity.Cart;
 import com.example.watchex.entity.Category;
 import com.example.watchex.entity.Product;
 import com.example.watchex.entity.User;
@@ -37,6 +38,7 @@ public class HomeController {
         List<ProductDto> listProduct6 = productService.getProductsByCategory(6, 15);
         List<ProductDto> listProduct7 = productService.getProductsByCategory(7, 15);
 
+        model.addAttribute("cartCount", Cart.cart.size());
         model.addAttribute("categories", categories);
         model.addAttribute("products", products);
         model.addAttribute("productsAccessoriess", productsAccessoriess);

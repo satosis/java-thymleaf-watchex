@@ -76,7 +76,7 @@
                             </div>
                         </h3>
                         <div class="btnCart">
-                            <a class="muangay" href="{{ route('get.shopping.add',$product->id) }}">
+                            <a class="muangay" th:href="@{/cart/add/{id}(id=${product.id})}">
                                 <span>Mua ngay</span>
                                 <span>Giao hàng miễn phí - Thanh toán tại nhà</span>
                             </a>
@@ -157,7 +157,7 @@
                                 </div>
                                 <div class="pt10 fs14">
                                     <img class="mr-1" src="/view/css/icon/bh10.png" height="17">
-                                    <a class="name" href="/chinh-sach-chung/2/1.-Chinh-sach-bao-hanh.html">
+                                    <a class="name" href="javascript:;">
                                         Chế độ bảo hành 10 năm <span>(Xem chi tiết)</span>
                                     </a>
                                 </div>
@@ -201,8 +201,7 @@
                                     </div>
                                 </div>
                                 <div class="lstBtn">
-                                    <a href="{{ route('get.shopping.add' ,$product->id) }}" class="buttn muangay">Mua
-                                        ngay</a>
+                                    <a th:href="@{/cart/add/{id}(id=${product.id})}" class="buttn muangay">Mua ngay</a>
                                 </div>
                             </div>
                         </div>

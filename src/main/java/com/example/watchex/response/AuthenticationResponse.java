@@ -1,4 +1,4 @@
-package com.example.watchex.controller;
+package com.example.watchex.response;
 
 import com.example.watchex.entity.Admin;
 import com.example.watchex.entity.User;

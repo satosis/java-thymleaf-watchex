@@ -79,7 +79,7 @@
             </div>
         </form>
         <ul class="menuRight dnTablet-l" th:if="${#request.userPrincipal}">
-            <li><a href="{{ route('get.user.orders', ['status' => 0]) }}" title="Home">Đơn hàng</a></li>
+            <li><a href="/order" title="Home">Đơn hàng</a></li>
             <li>
                 <a th:href="@{'/profile'}">
                     [[${@commonConfigurations.getCurrentUser.getName()}]]
@@ -158,9 +158,9 @@
                     <span class="bot">1800 0000</span>
                 </span>
             </a>
-            <a href="{{ route('get.shopping.index')}}" class="btnCart">
+            <a  th:href="@{/cart}" class="btnCart">
                 <i class="fa fa-shopping-cart"></i>
-                <span class="number">{{  Cart::count() }}</span>
+                <span class="number">[[${cartCount}]]</span>
             </a>
         </div>
     </div>
@@ -169,7 +169,6 @@
 
 <script src="https://sp.zalo.me/plugins/sdk.js"> </script>
 <!-- Load Facebook SDK for JavaScript -->
-<div id="fb-root"></div>
 <script>
     window.fbAsyncInit = function () {
         FB.init({

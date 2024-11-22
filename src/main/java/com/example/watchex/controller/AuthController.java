@@ -4,32 +4,27 @@ import com.example.watchex.common.TokenType;
 import com.example.watchex.dto.JwtResponse;
 import com.example.watchex.dto.LoginDto;
 import com.example.watchex.dto.RegisterDto;
+import com.example.watchex.entity.Cart;
 import com.example.watchex.entity.Category;
 import com.example.watchex.entity.Token;
 import com.example.watchex.entity.User;
+import com.example.watchex.response.AuthenticationResponse;
 import com.example.watchex.service.*;
 import com.example.watchex.utils.CommonUtils;
 import com.example.watchex.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.context.request.WebRequest;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -69,13 +64,10 @@ public class AuthController {
         if (CommonUtils.getCookie(request, "Authorization") != null) {
             return "redirect:/";
         }
-        loginDto.setPassword("123321");
         List<Category> categories = categoryService.getAll();
         model.addAttribute("categories", categories);
         model.addAttribute("loginDto", loginDto);
-        loginDto.setEmail("user@gmail.com");
-        loginDto.setPassword("123456789");
-        model.addAttribute("categories", categories);
+        model.addAttribute("cartCount", Cart.cart.size());
 
         return "auth/login";
     }
@@ -141,6 +133,7 @@ public class AuthController {
             return "redirect:/";
         }
         List<Category> categories = categoryService.getAll();
+        model.addAttribute("cartCount", Cart.cart.size());
         model.addAttribute("categories",categories);
         return "auth/register";
     }

@@ -2,27 +2,22 @@ package com.example.watchex.controller;
 
 import com.example.watchex.dto.ProductDto;
 import com.example.watchex.dto.RatingDto;
-import com.example.watchex.dto.SearchDto;
+import com.example.watchex.entity.Cart;
 import com.example.watchex.entity.Category;
-import com.example.watchex.entity.Product;
-import com.example.watchex.entity.User;
 import com.example.watchex.entity.UserFavourite;
 import com.example.watchex.repository.RatingRepository;
 import com.example.watchex.service.CategoryService;
 import com.example.watchex.service.ProductService;
 import com.example.watchex.service.UserFavouriteService;
-import com.example.watchex.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.net.http.HttpHeaders;
 import java.util.List;
 import java.util.Map;
 
@@ -44,9 +39,10 @@ public class ProductController {
     private RatingRepository ratingRepository;
 
     @GetMapping("")
-    public String index(@RequestParam Map<String, String> params, Model model, RedirectAttributes ra) {
+    public String index(@RequestParam Map<String, String> params, Model model) {
         List<Category> categories = categoryService.getAll();
         Page<ProductDto> products = productService.get(params);
+        model.addAttribute("cartCount", Cart.cart.size());
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
         model.addAttribute("currentPage", params.get("page") != null ? Integer.parseInt(params.get("page")) : 1);
@@ -59,7 +55,7 @@ public class ProductController {
         return "product/list";
     }
     @GetMapping("/{slug}")
-    public String detail(@PathVariable("slug") String slug, Model model, RedirectAttributes ra) {
+    public String detail(@PathVariable("slug") String slug, Model model) {
         List<Category> categories = categoryService.getAll();
         ProductDto product = productService.findBySlug(slug);
 
@@ -67,7 +63,7 @@ public class ProductController {
         List<ProductDto> productSuggest = productService.getProductsByCategory(product.getCategory().getId(), 3);
         UserFavourite userFavourite = userFavouriteService.getByProductId(product);
         String[] tags= product.getKeywordseo().split(",");
-        model.addAttribute("categories", categories);
+        model.addAttribute("cartCount", Cart.cart.size());
         model.addAttribute("product", product);
         model.addAttribute("ratings", ratings);
         model.addAttribute("categories", categories);
@@ -78,10 +74,11 @@ public class ProductController {
     }
 
     @GetMapping("/category/{slug}")
-    public String category(@PathVariable("slug") String slug, @RequestParam Map<String, String> params, Model model, RedirectAttributes ra) {
+    public String category(@PathVariable("slug") String slug, @RequestParam Map<String, String> params, Model model) {
         List<Category> categories = categoryService.getAll();
         Category category = categoryService.findBySlug(slug);
         Page<ProductDto> products = productService.findBySlugCategory(slug, params);
+        model.addAttribute("cartCount", Cart.cart.size());
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
         model.addAttribute("currentPage", params.get("page") != null ? Integer.parseInt(params.get("page")) : 1);

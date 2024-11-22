@@ -1,0 +1,290 @@
+<div th:include="/fragments/user/header"></div>
+<style>
+    .d-none {
+        display: none;
+    }
+
+    .updatecart {
+        background-color: rgb(239, 239, 239);
+        padding: 7px;
+    }
+
+    .position-relative {
+        position: relative
+    }
+
+    input:enabled:read-write:-webkit-any(:focus, :hover)::-webkit-inner-spin-button {
+        display: none
+    }
+
+    .js-increase {
+        position: absolute;
+        top: 0;
+        cursor: pointer;
+        font-size: 120%;
+        margin-left: 20px;
+    }
+
+    .js-decrease {
+        position: absolute;
+        top: 0;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 150%;
+        margin-left: 23px;
+    }
+</style>
+<link rel="stylesheet" th:href="@{/view/css/cart.css}"/>
+<div id="pageway" style="border-bottom: 5px solid #e5e5e5;">
+    <div class="wrp">
+        <ul>
+            <li><a href="/"><b>TRANG CHỦ</b></a></li>
+            <li><a href="javascript://" style="color: #288ad6"><b>GIỎ HÀNG</b></a></li>
+        </ul>
+    </div>
+</div>
+</div>
+<div id="container">
+    <div class="wrp">
+        <div id="product" class="cart">
+            <div class="flex">
+                <div class="left">
+                    <div class="cart_header" style="text-align: center;color: #288ad6;">THÔNG TIN GIỎ HÀNG(
+                        <span class="number">[[${cartCount}]]</span> sản phẩm)
+                    </div>
+                    <form name="frm_cart" action="" method="post">
+                        <div class="tableCart">
+                            <div class="row row1">
+                                <div class="col col1"></div>
+                                <div class="flex flex_1">
+                                    <div class="col col2 dnmobile">Sản phẩm</div>
+                                    <div class="flex flex_1 dnmobile">
+                                        <div class="col col3">Giá</div>
+                                        <div class="col col4">Số lượng</div>
+                                        <div class="col col5">Thành tiền</div>
+                                        <div class="col col6"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <nav th:each="cart: ${shopping}">
+                                <div class="row row2">
+                                    <div class="col col1">
+                                        <div class="wImage">
+                                            <a th:href="@{/product/{slug}(slug=${cart?.product?.pro_slug})}"
+                                               class="image">
+                                                <img th:src="${cart?.product?.pro_avatar}"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex_1">
+                                        <div class="col col2">
+                                            <a th:href="@{/product/{slug}(slug=${cart?.product?.pro_slug})}"
+                                               class="fHelveticaNeueB">[[${cart?.product?.pro_name}]]
+                                            </a>
+                                        </div>
+                                        <div class="col col3">
+                                            <span class="fs16">
+                                                <p>
+                                                    <b>[[${@commonConfigurations.formatPrice(cart?.product?.pro_price, cart?.product?.pro_sale, 0)}]]
+                                                    </b>
+                                                </p>
+                                                    <p style="background: #F00;padding: 5px 5px;color: #FFF;border-radius: 25px;text-transform: uppercase;font-weight: bold;width: 80px;text-align: center;"
+                                                       th:if="${cart?.product?.pro_sale}">
+                                                    - [[${cart?.product?.pro_sale}]] %</p>
+                                            </span>
+                                        </div>
+                                        <div class="col col4">
+                                            <span class="dn dibmobile pr4">Số lượng: </span>
+                                            <div class="position-relative">
+                                                <input type="number" min="1" class="input_quantity" name="qty"
+                                                       th:data-url="@{/cart/update/{id}(id=${cart?.product.id})}"
+                                                       th:data-id-product="${cart?.product.id}"
+                                                       th:value="${cart?.quantity}" id="qty"/>
+                                                <p th:data-price="${@commonConfigurations.formatPrice(cart?.product?.pro_price, cart?.product?.pro_sale, 0)}"
+                                                   th:data-url="@{/cart/update/{id}(id=${cart?.product.id})}"
+                                                   th:data-id-product="${cart?.product.id}">
+                                                    <span class="js-increase">+</span>
+                                                    <span class="js-decrease">-</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col col5">
+                                            <span class="dn dibmobile pr4">Thành tiền: </span>
+                                            <div class="fs16 fwb js-total-item">
+                                                [[${@commonConfigurations.formatPrice((cart?.product?.pro_price -
+                                                cart?.product?.pro_price * (cart?.product?.pro_sale / 100)) *
+                                                cart.quantity, 0, 0)}]]
+                                            </div>
+                                        </div>
+                                        <div class="col col6">
+                                            <a th:href="@{/cart/remove/{id}(id=${cart?.product?.id})}">
+                                                <img th:src="@{/view/img/delete.jpg}" alt="Delete">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="btnCartGroup tac" style="margin-top: 30px;">
+                            <a href="/" class="btnCart"
+                               style="background: #3498db;padding: 10px 15px;color: #FFF;border-radius: 25px;text-transform: uppercase;">Mua
+                                thêm sản phẩm khác <i class="fa fa-arrow-right"></i></a>
+                        </div>
+                    </form>
+                </div>
+                <div class="infoDatHang flex_1">
+                    <div class="group">
+                        <div class="c000 fSFUHelveticaCondensedBold ttu fs20 pb20"
+                             style="text-align: center;color: #288ad6;">THÔNG TIN LIÊN HỆ
+                        </div>
+                        <p class="fsti pb10 tac">Lưu ý: Các ô có dấu <span class="cRed">(*)</span> cần điền đầy đủ thông
+                            tin</p>
+                        <div class="form">
+                            <form class="from_cart_register" action="/cart/checkout" method="post">
+                                <div class="item">
+                                    <p class="label">Họ và tên <span class="cRed">(*)</span></p>
+                                    <input type="text" name="tst_name"
+                                           th:value="${@commonConfigurations.getCurrentUser.getName()}"
+                                           id="tst_name" autocomplete="off" placeholder="Nhập họ tên"/>
+                                </div>
+                                <div class="item">
+                                    <p class="label">Điện thoại <span class="cRed">(*)</span></p>
+                                    <input type="text" name="tst_phone"
+                                           th:value="${@commonConfigurations.getCurrentUser.getPhone()}"
+                                           id="tst_phone" autocomplete="off" placeholder="Nhập điện thoại"/>
+                                </div>
+                                <div class="item">
+                                    <p class="label">Địa chỉ <span class="cRed">(*)</span></p>
+                                    <input type="text" name="tst_address" value="Hà Nội" id="tst_address"
+                                           autocomplete="off" placeholder="Nhập địa chỉ"/>
+                                </div>
+                                <div class="item">
+                                    <p class="label">Email</p>
+                                    <input type="text" name="tst_email"
+                                           th:value="${@commonConfigurations.getCurrentUser.getEmail()}"/>
+                                </div>
+                                <div class="item">
+                                    <p class="label">Nội dung</p>
+                                    <textarea name="tst_note" cols="" rows="2">Không có</textarea>
+                                </div>
+
+                                <input type="hidden" name="amount" id="amount" th:value="${total}">
+
+                                <div class="totalPrice">Thanh toán: <span id="totalPrice"
+                                                                          style="font-size: 30px;color: red;margin-left: 30px;">
+                                [[${@commonConfigurations.formatPrice(total, 0, 0)}]]
+                                </span>
+                                    VNĐ
+                                </div>
+                                <div>
+                                </div>
+                                <div class="btnThanhToan" style="margin-top:10px">
+                                    <button class="tac" type="submit" value="1" name="submit">
+                                        <p class="ttu fHelveticaNeueB fs15">ĐẶT HÀNG THANH TOÁN SAU</p>
+                                        <p>(Trả tiền khi nhận hàng tại nhà)</p>
+                                    </button>
+
+                                    <button class="tac" type="submit" value="2" name="submit">
+                                        <p class="ttu fHelveticaNeueB fs15">Thanh toán online</p>
+                                        <p>(PAYPAL)</p>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:include="/fragments/user/footer"></div>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(function () {
+        $('#qty').on('change', function (event) {
+            event.preventDefault();
+            $this = $(this);
+            let url = $this.data('url');
+            let number = $("#qty").val();
+            if (url) {
+                $.ajax({
+                    url: url + "/" + number,
+                    success: function (results) {
+                        if (typeof results.data.totalMoney !== "underfined") {
+                            $this.val(number);
+                            $this.parents('nav').find(".js-total-item").text(results.data.totalItem + "đ");
+                            $(".number").text(results.data.number);
+                            $('#totalPrice').text(results.data.totalMoney);
+                        } else {
+                            $input.val(number + 1);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        toastr.error(xhr.responseText);
+                    }
+                })
+            }
+        })
+
+        $('.js-increase').click(function () {
+            let $this = $(this);
+            let $input = $this.parent().prev();
+            let number = parseInt($input.val());
+            let price = $this.parent().data('price');
+            let URL = $this.parent().data('url');
+            number = number + 1;
+            var total = $('#amount').val();
+            $('#amount').val(parseInt(total) + parseInt(price));
+            $.ajax({
+                url: URL + "/" + number,
+                success: function (results) {
+                    if (typeof results.data.totalMoney !== "underfined") {
+                        $input.val(number);
+                        $this.parents('nav').find(".js-total-item").text(results.data.totalItem + "đ");
+                        $(".number").text(results.data.number);
+                        $('#totalPrice').text(results.data.totalMoney);
+                    } else {
+                        $input.val(number + 1);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    toastr.error(xhr.responseText);
+                }
+            })
+        })
+        $('.js-decrease').click(function () {
+            let $this = $(this);
+            let $input = $this.parent().prev();
+            let number = parseInt($input.val());
+            let price = $this.parent().data('price');
+            let URL = $this.parent().data('url');
+            var total = $('#amount').val();
+            $('#amount').val(parseInt(total) - parseInt(price));
+            if (number <= 1) {
+                toastr.warning("Số sản phẩm không được bằng 0");
+                return false;
+            }
+            number = number - 1;
+
+            $.ajax({
+                url: URL + "/" + number,
+                success: function (results) {
+                    if (typeof results.data.totalMoney !== "underfined") {
+                        $input.val(number);
+                        $this.parents('nav').find(".js-total-item").text(results.data.totalItem + "đ");
+                        $(".number").text(results.data.number);
+                        $('#totalPrice').text(results.data.totalMoney);
+                    } else {
+                        $input.val(number + 1);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    toastr.error(xhr.responseText);
+                }
+            })
+
+        })
+    })
+</script>
