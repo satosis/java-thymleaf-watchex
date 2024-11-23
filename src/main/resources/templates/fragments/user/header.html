@@ -158,7 +158,7 @@
                     <span class="bot">1800 0000</span>
                 </span>
             </a>
-            <a  th:href="@{/cart}" class="btnCart">
+            <a  th:href="@{/cart}" th:class="${@commonConfigurations.getCurrentUser} ? 'btnCart' : 'js-login btnCart'">
                 <i class="fa fa-shopping-cart"></i>
                 <span class="number">[[${cartCount}]]</span>
             </a>

@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
@@ -18,6 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "and (p.pro_name LIKE %:#{#dto.getKeyword()}% or :#{#dto.getKeyword()} is null or :#{#dto.getKeyword()} = '' )" +
             "order by p.pro_pay desc")
     Page<ProductDto> search(SearchDto dto, Pageable pageable);
+
     @Query("SELECT p FROM Product p " +
             "order by p.pro_pay desc")
     List<ProductDto> getProductsAccessoriess(Pageable pageable);
@@ -42,4 +42,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("select p from Product p where p.category.c_slug = :slug")
     Page<ProductDto> findBySlugCategory(String slug, Pageable pageable);
+
+    @Query("select p from Product p where p.pro_active = 1")
+    List<Product> getActive();
 }

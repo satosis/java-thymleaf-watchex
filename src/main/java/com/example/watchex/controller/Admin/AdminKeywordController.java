@@ -29,6 +29,7 @@ public class AdminKeywordController {
             page = Integer.parseInt(params.get("page"));
         }
         findPaginate(page, model);
+        model.addAttribute("title", "Quản lý từ khóa");
         return "admin/keywords/index";
     }
 
@@ -45,6 +46,7 @@ public class AdminKeywordController {
     @GetMapping("keyword/create")
     public String create(Model model) {
         model.addAttribute("keyword", new Keyword());
+        model.addAttribute("title", "Thêm từ khóa");
         return "admin/keywords/create";
     }
 
@@ -59,6 +61,7 @@ public class AdminKeywordController {
     public String edit(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
         try {
             Keyword keyword = keywordService.show(id);
+            model.addAttribute("title", "Sửa từ khóa " + keyword.getK_name());
             model.addAttribute("keyword", keyword);
             return "admin/keywords/edit";
         } catch (ClassNotFoundException exception) {

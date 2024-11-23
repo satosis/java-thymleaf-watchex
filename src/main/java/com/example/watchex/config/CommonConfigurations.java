@@ -1,5 +1,6 @@
 package com.example.watchex.config;
 
+import com.example.watchex.entity.Admin;
 import com.example.watchex.entity.User;
 import com.example.watchex.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.UUID;
 
 @Configuration
 public class CommonConfigurations implements WebMvcConfigurer {
@@ -60,11 +61,13 @@ public class CommonConfigurations implements WebMvcConfigurer {
         return String.format("%,.0f", formatPrice);
     }
 
-    @Autowired
     public static User getCurrentUser() {
         return CommonUtils.getCurrentUser();
     }
 
+    public static Admin getCurrentAdmin() {
+        return CommonUtils.getCurrentAdmin();
+    }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         exposeDirectory("uploads", registry);
@@ -78,4 +81,5 @@ public class CommonConfigurations implements WebMvcConfigurer {
 
         registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/" + uploadPath + "/");
     }
+
 }

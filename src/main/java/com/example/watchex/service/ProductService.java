@@ -100,4 +100,7 @@ public class ProductService {
     public List<ProductDto> getProductsByCategory(Integer cate, Integer limit) {
         return productRepository.getProductsByCategory(cate, PageRequest.of(0, limit, Sort.by("id").descending()));
     }
+    public List<Product> getActive() {
+        return productRepository.getActive();
+    }
 }

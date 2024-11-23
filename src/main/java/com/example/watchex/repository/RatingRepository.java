@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface RatingRepository extends JpaRepository<UserFavourite, Integer> {
+public interface RatingRepository extends JpaRepository<Rating, Integer> {
     @Query(nativeQuery = true, value =
             "select r_number, count(r_number) as total, count(r_number) as count_number from ratings " +
                     "where r_product_id = :productId group by r_number")

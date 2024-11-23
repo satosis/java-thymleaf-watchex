@@ -76,7 +76,7 @@
                             </div>
                         </h3>
                         <div class="btnCart">
-                            <a class="muangay" th:href="@{/cart/add/{id}(id=${product.id})}">
+                            <a th:class="${@commonConfigurations.getCurrentUser} ? 'muangay' : 'js-login muangay'" th:href="@{/cart/add/{id}(id=${product.id})}">
                                 <span>Mua ngay</span>
                                 <span>Giao hàng miễn phí - Thanh toán tại nhà</span>
                             </a>
@@ -201,7 +201,7 @@
                                     </div>
                                 </div>
                                 <div class="lstBtn">
-                                    <a th:href="@{/cart/add/{id}(id=${product.id})}" class="buttn muangay">Mua ngay</a>
+                                    <a th:href="@{/cart/add/{id}(id=${product.id})}" th:class="${@commonConfigurations.getCurrentUser} ? 'buttn muangay' : 'js-login buttn muangay'" >Mua ngay</a>
                                 </div>
                             </div>
                         </div>

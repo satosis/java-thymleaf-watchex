@@ -12,6 +12,7 @@ import com.example.watchex.service.AdminJwtService;
 import com.example.watchex.service.AdminService;
 import com.example.watchex.service.TokenService;
 import com.example.watchex.utils.AdminJwtUtils;
+import com.example.watchex.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,9 +36,14 @@ public class AdminAuthController {
 
     @Autowired
     private TokenService tokenService;
-    private AdminJwtUtils jwtUtil;
+    private final AdminJwtUtils jwtUtil;
 
-    private AdminJwtService jwtService;
+    private final AdminJwtService jwtService;
+
+    public AdminAuthController(AdminJwtUtils jwtUtil, AdminJwtService jwtService) {
+        this.jwtUtil = jwtUtil;
+        this.jwtService = jwtService;
+    }
 
     @GetMapping("login")
     public String loginForm(Model model, LoginDto loginDto) {
@@ -77,6 +83,7 @@ public class AdminAuthController {
                 .build();
 
 
+        CommonUtils.setCookie("AdminAuthorization", "Bearer " + jwtToken);
         return "redirect:/admin";
 //        return ResponseEntity.ok(new MessageEntity(200, jwt));
     }
@@ -131,5 +138,11 @@ public class AdminAuthController {
 //        emailService.sendEmail(registerDto.getEmail(), subject, template);
         return ResponseEntity.ok().body(new MessageEntity(200, jwt));
 
+    }
+
+    @GetMapping("/auth/logout")
+    public String Logout(){
+        CommonUtils.setCookie("AdminAuthorization", "");
+        return "redirect:/";
     }
 }

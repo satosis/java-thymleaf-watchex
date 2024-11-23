@@ -1,0 +1,121 @@
+
+<!-- ./wrapper -->
+
+<!-- jQuery 3 -->
+<script th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+<!--  BOOTSTRAP INPUT -->
+<script th:src="@{/tagsinput/bootstrap-tagsinput-latest/src/bootstrap-tagsinput.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/bower_components/jquery-ui/jquery-ui.min.js}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button);
+</script>
+<!-- Bootstrap 3.3.7 -->
+<script th:src="@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+<!-- Morris.js charts -->
+<script th:src="@{/bower_components/raphael/raphael.min.js}"></script>
+<script th:src="@{/bower_components/morris.js/morris.min.js}"></script>
+<!-- Sparkline -->
+<script th:src="@{/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js}"></script>
+<!-- jvectormap -->
+<script th:src="@{/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js}"></script>
+<script th:src="@{/plugins/jvectormap/jquery-jvectormap-world-mill-en.js}"></script>
+<!-- jQuery Knob Chart -->
+<script th:src="@{/plugins/select2/dist/js/select2.min.js}"></script>
+<!-- select2 -->
+<script th:src="@{/bower_components/jquery-knob/dist/jquery.knob.min.js}"></script>
+<!-- daterangepicker -->
+<script th:src="@{/bower_components/moment/min/moment.min.js}"></script>
+<script th:src="@{/bower_components/bootstrap-daterangepicker/daterangepicker.js}"></script>
+<!-- datepicker -->
+<script th:src="@{/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script th:src="@{/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
+<!-- Slimscroll -->
+<script th:src="@{/bower_components/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- FastClick -->
+<script th:src="@{/bower_components/fastclick/lib/fastclick.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/view/js/adminlte.min.js}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script th:src="@{/view/js/pages/dashboard.js}"></script>
+<!-- AdminLTE for demo purposes -->
+<script th:src="@{/view/js/demo.js}"></script>
+<script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('content', {
+        filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+        filebrowserUploadMethod: 'form'
+    });
+</script>
+<script>
+    $(function () {
+        if ($(".js-select2-keyword").length > 0) {
+            $('.js-select2-keyword').select2({
+                placeholder: "Chọn từ khóa",
+                maximumSelectionLength: 3
+            })
+        }
+        $('.js-preview-transaction').click(function (event) {
+            event.preventDefault();
+            let $this = $(this);
+            let URL = $this.attr('data-href');
+            let ID = $this.attr('data-id');
+            $("#idTransaction").html("#" + ID);
+            $.ajax({
+                url: URL
+            })
+                .done(function (results) {
+                    $('#modal-preview-transaction .content').html(results.html)
+                    $("#modal-preview-transaction").modal({
+                        show: true
+                    })
+                })
+        })
+        $('body').on("click", ".order-delete", function (event) {
+            event.preventDefault();
+            let URL = $(this).attr('href');
+            $.ajax({
+                url: URL
+            }).done(function (result) {
+                if (result.code == 299) {
+                    $(this).parent("tr").remove();
+                }
+            });
+
+        })
+        $(".js-query-confirm").click(function (event) {
+            event.preventDefault();
+            let URL = $(this).attr('href');
+            $.confirm({
+                title: 'Bạn có muốn xóa dữ liệu không ?',
+                content: 'Dữ liệu xóa đi không thể khôi phục',
+                type: 'red',
+                buttons: {
+                    ok: {
+                        text: "ok",
+                        btnClass: "btn-primary",
+                        keys: ['enter'],
+                        action: function () {
+                            window.location.href = URL;
+                        }
+                    },
+                    cancel: function () {
+
+                    },
+
+                }
+            });
+        })
+
+
+    })
+</script>
+</body>
+
+</html>

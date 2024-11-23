@@ -52,7 +52,7 @@
                     <div class="cart_header" style="text-align: center;color: #288ad6;">THÔNG TIN GIỎ HÀNG(
                         <span class="number">[[${cartCount}]]</span> sản phẩm)
                     </div>
-                    <form name="frm_cart" action="" method="post">
+                    <form name="frm_cart" action="/transaction/store" method="post">
                         <div class="tableCart">
                             <div class="row row1">
                                 <div class="col col1"></div>
@@ -140,35 +140,33 @@
                         <p class="fsti pb10 tac">Lưu ý: Các ô có dấu <span class="cRed">(*)</span> cần điền đầy đủ thông
                             tin</p>
                         <div class="form">
-                            <form class="from_cart_register" action="/cart/checkout" method="post">
+                            <form class="from_cart_register" action="/transaction/store" method="post">
                                 <div class="item">
                                     <p class="label">Họ và tên <span class="cRed">(*)</span></p>
-                                    <input type="text" name="tst_name"
+                                    <input type="text" name="name"
                                            th:value="${@commonConfigurations.getCurrentUser.getName()}"
                                            id="tst_name" autocomplete="off" placeholder="Nhập họ tên"/>
                                 </div>
                                 <div class="item">
                                     <p class="label">Điện thoại <span class="cRed">(*)</span></p>
-                                    <input type="text" name="tst_phone"
+                                    <input type="text" name="phone"
                                            th:value="${@commonConfigurations.getCurrentUser.getPhone()}"
                                            id="tst_phone" autocomplete="off" placeholder="Nhập điện thoại"/>
                                 </div>
                                 <div class="item">
                                     <p class="label">Địa chỉ <span class="cRed">(*)</span></p>
-                                    <input type="text" name="tst_address" value="Hà Nội" id="tst_address"
+                                    <input type="text" name="address" value="Hà Nội" id="tst_address"
                                            autocomplete="off" placeholder="Nhập địa chỉ"/>
                                 </div>
                                 <div class="item">
                                     <p class="label">Email</p>
-                                    <input type="text" name="tst_email"
+                                    <input type="text" name="email"
                                            th:value="${@commonConfigurations.getCurrentUser.getEmail()}"/>
                                 </div>
                                 <div class="item">
                                     <p class="label">Nội dung</p>
-                                    <textarea name="tst_note" cols="" rows="2">Không có</textarea>
+                                    <textarea name="note" cols="" rows="2">Không có</textarea>
                                 </div>
-
-                                <input type="hidden" name="amount" id="amount" th:value="${total}">
 
                                 <div class="totalPrice">Thanh toán: <span id="totalPrice"
                                                                           style="font-size: 30px;color: red;margin-left: 30px;">
@@ -179,14 +177,13 @@
                                 <div>
                                 </div>
                                 <div class="btnThanhToan" style="margin-top:10px">
-                                    <button class="tac" type="submit" value="1" name="submit">
+                                    <button class="tac" type="submit" value="1" name="type">
                                         <p class="ttu fHelveticaNeueB fs15">ĐẶT HÀNG THANH TOÁN SAU</p>
                                         <p>(Trả tiền khi nhận hàng tại nhà)</p>
                                     </button>
 
-                                    <button class="tac" type="submit" value="2" name="submit">
+                                    <button class="tac" type="submit" value="2" name="type">
                                         <p class="ttu fHelveticaNeueB fs15">Thanh toán online</p>
-                                        <p>(PAYPAL)</p>
                                     </button>
                                 </div>
                             </form>

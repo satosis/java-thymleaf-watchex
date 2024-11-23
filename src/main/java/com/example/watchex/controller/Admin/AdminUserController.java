@@ -30,6 +30,7 @@ public class AdminUserController {
             page = Integer.parseInt(params.get("page"));
         }
         findPaginate(page, model);
+        model.addAttribute("title", "Quản lý người dùng");
         return "admin/users/index";
     }
 
@@ -47,6 +48,7 @@ public class AdminUserController {
     @GetMapping("user/create")
     public String create(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("title", "Thêm người dùng");
         return "admin/users/create";
     }
 
@@ -63,6 +65,7 @@ public class AdminUserController {
     public String edit(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
         try {
             User user = userService.show(id);
+            model.addAttribute("title", "Sửa người dùng " + user.getName());
             model.addAttribute("user", user);
             return "admin/users/edit";
         } catch (UserPrincipalNotFoundException exception) {

@@ -12,6 +12,6 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
     @Query("SELECT u FROM Admin u WHERE u.email = :email")
     Admin findByEmail(@Param("email") String email);
 
-    @Query("SELECT count(u) FROM User u WHERE u.email = :email")
+    @Query("SELECT count(u) FROM Admin u WHERE u.email = :email")
     int existsByEmail(String email);
 }

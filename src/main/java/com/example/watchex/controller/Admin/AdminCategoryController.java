@@ -29,6 +29,7 @@ public class AdminCategoryController {
             page = Integer.parseInt(params.get("page"));
         }
         findPaginate(page, model);
+        model.addAttribute("title", "Quản lý danh mục");
         return "admin/categories/index";
     }
 
@@ -45,6 +46,7 @@ public class AdminCategoryController {
 
     @GetMapping("category/create")
     public String create(Model model) {
+        model.addAttribute("title", "Thêm danh mục");
         model.addAttribute("category", new Category());
         return "admin/categories/create";
     }
@@ -60,6 +62,7 @@ public class AdminCategoryController {
     public String edit(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
         try {
             Category category = categoryService.show(id);
+            model.addAttribute("title", "Sửa danh mục " + category.getC_name());
             model.addAttribute("category", category);
             return "admin/categories/edit";
         } catch (ClassNotFoundException exception) {

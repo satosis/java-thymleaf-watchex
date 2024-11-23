@@ -29,6 +29,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -36,19 +37,20 @@ public class CommonUtils {
     private static final CategoryService categoryService = new CategoryService();
     private static final Pattern WHITESPACE = Pattern.compile("[\\s]");
     private static final Pattern IMAGE = Pattern.compile("[^\\w-.]");
+
     public static String toSlug(String name) {
-        String[] a = { "à", "á", "ạ", "ả", "ã", "â", "ầ", "ấ", "ậ", "ẩ", "ẫ", "ă", "ắ", "ằ", "ắ", "ặ", "ẳ", "ẵ", "a" };
-        String[] d = { "đ", "d" };
-        String[] e = { "è", "é", "ẹ", "ẻ", "ẽ", "ê", "ề", "ế", "ệ", "ể", "ễ", "e" };
-        String[] i = { "ì", "í", "ị", "ỉ", "ĩ", "i" };
-        String[] y = { "ỳ", "ý", "ỵ", "ỷ", "ỹ", "y" };
-        String[] o = { "ò", "ó", "ọ", "ỏ", "õ", "ô", "ồ", "ố", "ộ", "ổ", "ỗ", "ơ", "ờ", "ớ", "ợ", "ở", "ỡ", "o" };
-        String[] u = { "ù", "ú", "ụ", "ủ", "ũ", "ừ", "ứ", "ự", "ử", "ữ", "u", "ư" };
+        String[] a = {"à", "á", "ạ", "ả", "ã", "â", "ầ", "ấ", "ậ", "ẩ", "ẫ", "ă", "ắ", "ằ", "ắ", "ặ", "ẳ", "ẵ", "a"};
+        String[] d = {"đ", "d"};
+        String[] e = {"è", "é", "ẹ", "ẻ", "ẽ", "ê", "ề", "ế", "ệ", "ể", "ễ", "e"};
+        String[] i = {"ì", "í", "ị", "ỉ", "ĩ", "i"};
+        String[] y = {"ỳ", "ý", "ỵ", "ỷ", "ỹ", "y"};
+        String[] o = {"ò", "ó", "ọ", "ỏ", "õ", "ô", "ồ", "ố", "ộ", "ổ", "ỗ", "ơ", "ờ", "ớ", "ợ", "ở", "ỡ", "o"};
+        String[] u = {"ù", "ú", "ụ", "ủ", "ũ", "ừ", "ứ", "ự", "ử", "ữ", "u", "ư"};
         name = name.replace(" ", "-");
         name = name.replace("#", "sharp");
         name = name.replace("$", "dola");
-        String[] specialchars = { ")", "(", "*", "[", "]", "}", "{", ">", "<", "=", ":", ",", "'", "\"", "/", "\\", "&",
-                "?", ";", ".", "@", "^" };
+        String[] specialchars = {")", "(", "*", "[", "]", "}", "{", ">", "<", "=", ":", ",", "'", "\"", "/", "\\", "&",
+                "?", ";", ".", "@", "^"};
         name = name.toLowerCase();
         for (int k = 0; k < specialchars.length; k++)
             name = name.replace(specialchars[k], "");
@@ -468,8 +470,9 @@ public class CommonUtils {
         if (folder != null) {
             uploadDirectory = uploadDirectory + folder + "/";
         }
-        String uniqueFileName = getDate(new Date(), "yyyy-MM-dd") + "__" +  UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();;
-        Path uploadPath = Path.of(uploadDirectory + getDate(new Date(), "yyyy/MM/dd") );
+        String uniqueFileName = getDate(new Date(), "yyyy-MM-dd") + "__" + UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
+        ;
+        Path uploadPath = Path.of(uploadDirectory + getDate(new Date(), "yyyy/MM/dd"));
         Path filePath = uploadPath.resolve(uniqueFileName);
 
         if (!Files.exists(uploadPath)) {
@@ -500,5 +503,22 @@ public class CommonUtils {
     public static Object getSession(HttpServletRequest request, String name) {
         HttpSession session = request.getSession();
         return request.getAttribute(name);
+    }
+
+    public static ArrayList<String> getListDayAndMonth() {
+        ArrayList<String> days = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        Integer month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        int year = Year.now().getValue();
+        for (int i = 1; i < maxDay; i++) {
+            if (i < 10) {
+                days.add(year + "-" + month + "-0" + i);
+            } else {
+                days.add(year + "-" + month + "-" + i);
+            }
+        }
+        return days;
     }
 }

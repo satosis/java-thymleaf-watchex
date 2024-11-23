@@ -3,109 +3,117 @@
 <div class="lzd-playground-main">
     <div th:include="/fragments/user/sidebar" class="lzd-playground-nav"></div>
     <div class="lzd-playground-right">
-    <div class="breadcrumb"><a>Chỉnh sửa</a></div>
-    <div id="container" class="container">
-        <form th:action="@{'/profile/edit'}" method="post" enctype="multipart/form-data" th:object="${editProfileDto}">
-            <div class="edit-profile">
-                <div class="col-sm-4">
-                    <div class="box box-warning">
-                        <div class="box-body block-images">
-                            <div class="image-area">
-                                <img th:src="${@commonConfigurations.getCurrentUser.getAvatar()}" class="img-circle" alt="User profile picture" />
+        <div class="breadcrumb"><a>Chỉnh sửa</a></div>
+        <div id="container" class="container">
+            <form th:action="@{'/profile/edit'}" method="post" enctype="multipart/form-data"
+                  th:object="${editProfileDto}">
+                <div class="edit-profile">
+                    <div class="col-sm-4">
+                        <div class="box box-warning">
+                            <div class="box-body block-images">
+                                <div class="image-area">
+                                    <img th:src="${@commonConfigurations.getCurrentUser.getAvatar()}" class="img-circle"
+                                         alt="User profile picture"/>
+                                </div>
+                                <input type="file" name="avatar" size="40" class="d-none js-upload imageID"
+                                       id="thumbnail-stage"> &nbsp;
+                                <span class="label label-info" id="upload-file-info"></span>
                             </div>
-                            <input type="file" name="avatar" size="40" class="d-none js-upload imageID"
-                                   id="thumbnail-stage"> &nbsp;
-                            <span class="label label-info" id="upload-file-info"></span>
+                            <label for="thumbnail-stage" class="btn btn-primary">Thay ảnh...</label>
                         </div>
-                        <label for="thumbnail-stage" class="btn btn-primary">Thay ảnh...</label>
+                    </div>
+                    <div class="edit-profile-bd" style="margin-top:10px">
+                        <div class="edit-profile-item">
+                            <label for="name">Họ tên</label>
+                            <div class="edit-profile-item-info">
+                                <div class="mod-input floating edit-profile-input-name mod-input-name">
+                                    <input type="text" name="name" id="name" placeholder="Họ Tên"
+                                           th:value="${@commonConfigurations.getCurrentUser.getName()}"/>
+                                    <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="edit-profile-item">
+                            <label for="email">Địa chỉ email</label>
+                            <div class="mod-input floating  edit-profile-item-value">
+                                <input type="text" readonly name="email" id="email" placeholder="Email"
+                                       th:value="${@commonConfigurations.getCurrentUser.getEmail()}">
+                            </div>
+                        </div>
+                        <div class="edit-profile-item">
+                            <label for="phone">Số điện thoại</label>
+                            <div class="mod-input floating  edit-profile-item-value">
+                                <input type="text" name="phone" id="phone" placeholder="Số điện thoại"
+                                       th:value="${@commonConfigurations.getCurrentUser.getPhone()}">
+                                <p th:if="${#fields.hasErrors('phone')}" class="text-danger" th:errors="*{phone}"></p>
+                            </div>
+                        </div>
+                        <div class="edit-profile-item">
+                            <label for="address">Địa chỉ</label>
+                            <div class="mod-input floating  edit-profile-item-value">
+                                <input type="text" name="address" placeholder="Địa chỉ" id="address"
+                                       th:value="${@commonConfigurations.getCurrentUser.getAddress()}">
+                                <p th:if="${#fields.hasErrors('address')}" class="text-danger"
+                                   th:errors="*{address}"></p>
+                            </div>
+                        </div>
+                        <div class="edit-profile-item">
+                            <label for="birthday">Ngày sinh</label>
+                            <div class="mod-input floating edit-profile-item-value">
+                                <input type="date" name="birthday" id="birthday"
+                                       th:value="${@commonConfigurations.getCurrentUser.getBirthday()}">
+                                <p th:if="${#fields.hasErrors('birthday')}" class="text-danger"
+                                   th:errors="*{birthday}"></p>
+                            </div>
+                        </div>
+                        <div class="edit-profile-item">
+                            <label for="gender">Giới tính</label>
+                            <div class="mod-input floating  edit-profile-item-value">
+                                <select name="gender" id="gender" class="form-control">
+                                    <option value="0">Nam</option>
+                                    <option value="1"
+                                            th:if="${@commonConfigurations.getCurrentUser.getGender() == 1 ? 'selected' : ''}">
+                                        Nữ
+                                    </option>
+                                    <p th:if="${#fields.hasErrors('gender')}" class="text-danger"
+                                       th:errors="*{gender}"></p>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="edit-profile-item">
+                            <label for="oldpassword">Mật khẩu hiện tại</label>
+                            <div class="mod-input floating edit-profile-item-value">
+                                <input name="oldpassword" id="oldpassword" type="password"
+                                       placeholder="Tối thiểu 6 kí tự">
+                                <p th:if="${#fields.hasErrors('oldpassword')}" class="text-danger"
+                                   th:errors="*{oldpassword}"></p>
+                            </div>
+                        </div>
+                        <div class="edit-profile-item">
+                            <label for="password">Mật khẩu mới</label>
+                            <div class="mod-input floating  edit-profile-item-value">
+                                <input name="password" type="password" id="password" placeholder="Tối thiểu 6 kí tự">
+                                <p th:if="${#fields.hasErrors('password')}" class="text-danger"
+                                   th:errors="*{password}"></p>
+                            </div>
+                        </div>
+                        <div class="edit-profile-item">
+                            <label for="re_password">Nhập lại mật khẩu của bạn</label>
+                            <div class="mod-input floating  edit-profile-item-value">
+                                <input name="re_password" type="password" id="re_password"
+                                       placeholder="Tối thiểu 6 kí tự">
+                                <p th:if="${#fields.hasErrors('re_password')}" class="text-danger"
+                                   th:errors="*{re_password}"></p>
+                            </div>
+                        </div>
+                        <div class="change-foot-inner">
+                            <button type="submit" class="next-btn next-btn-primary next-btn-large">Lưu thay đổi</button>
+                        </div>
                     </div>
                 </div>
-                <div class="edit-profile-bd" style="margin-top:10px">
-                    <div class="edit-profile-item">
-                        <label for="name">Họ tên</label>
-                        <div class="edit-profile-item-info">
-                            <div class="mod-input floating edit-profile-input-name mod-input-name">
-                                <input type="text" name="name" id="name" placeholder="Họ Tên"
-                                       th:value="${@commonConfigurations.getCurrentUser.getName()}"/>
-                                <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="edit-profile-item">
-                        <label for="email">Địa chỉ email</label>
-                        <div class="mod-input floating  edit-profile-item-value">
-                            <input type="text" readonly name="email" id="email" placeholder="Email"
-                                   th:value="${@commonConfigurations.getCurrentUser.getEmail()}">
-                        </div>
-                    </div>
-                    <div class="edit-profile-item">
-                        <label for="phone">Số điện thoại</label>
-                        <div class="mod-input floating  edit-profile-item-value">
-                            <input type="text" name="phone" id="phone" placeholder="Số điện thoại"
-                                   th:value="${@commonConfigurations.getCurrentUser.getPhone()}">
-                            <p th:if="${#fields.hasErrors('phone')}" class="text-danger" th:errors="*{phone}"></p>
-                        </div>
-                    </div>
-                    <div class="edit-profile-item">
-                        <label for="address">Địa chỉ</label>
-                        <div class="mod-input floating  edit-profile-item-value">
-                            <input type="text" name="address" placeholder="Địa chỉ" id="address"
-                                   th:value="${@commonConfigurations.getCurrentUser.getAddress()}">
-                            <p th:if="${#fields.hasErrors('address')}" class="text-danger" th:errors="*{address}"></p>
-                        </div>
-                    </div>
-                    <div class="edit-profile-item">
-                        <label for="birthday">Ngày sinh</label>
-                        <div class="mod-input floating edit-profile-item-value">
-                            <input type="date" name="birthday" id="birthday"
-                                   th:value="${@commonConfigurations.getCurrentUser.getBirthday()}">
-                            <p th:if="${#fields.hasErrors('birthday')}" class="text-danger" th:errors="*{birthday}"></p>
-                        </div>
-                    </div>
-                    <div class="edit-profile-item">
-                        <label for="gender">Giới tính</label>
-                        <div class="mod-input floating  edit-profile-item-value">
-                            <select name="gender" id="gender" class="form-control">
-                                <option value="0">Nam</option>
-                                <option value="1"
-                                        th:if="${@commonConfigurations.getCurrentUser.getGender() == 1 ? 'selected' : ''}">
-                                    Nữ
-                                </option>
-                                <p th:if="${#fields.hasErrors('gender')}" class="text-danger" th:errors="*{gender}"></p>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="edit-profile-item">
-                        <label for="oldpassword">Mật khẩu hiện tại</label>
-                        <div class="mod-input floating edit-profile-item-value">
-                            <input name="oldpassword" id="oldpassword" type="password" placeholder="Tối thiểu 6 kí tự">
-                            <p th:if="${#fields.hasErrors('oldpassword')}" class="text-danger"
-                               th:errors="*{oldpassword}"></p>
-                        </div>
-                    </div>
-                    <div class="edit-profile-item">
-                        <label for="password">Mật khẩu mới</label>
-                        <div class="mod-input floating  edit-profile-item-value">
-                            <input name="password" type="password" id="password" placeholder="Tối thiểu 6 kí tự">
-                            <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>
-                        </div>
-                    </div>
-                    <div class="edit-profile-item">
-                        <label for="re_password">Nhập lại mật khẩu của bạn</label>
-                        <div class="mod-input floating  edit-profile-item-value">
-                            <input name="re_password" type="password" id="re_password" placeholder="Tối thiểu 6 kí tự">
-                            <p th:if="${#fields.hasErrors('re_password')}" class="text-danger"
-                               th:errors="*{re_password}"></p>
-                        </div>
-                    </div>
-                    <div class="change-foot-inner">
-                        <button type="submit" class="next-btn next-btn-primary next-btn-large">Lưu thay đổi</button>
-                    </div>
-                </div>
-            </div>
+            </form>
+        </div>
+
     </div>
-</div>
-</div>
-</div>
 </div>
 <div th:include="/fragments/user/footer"></div>
