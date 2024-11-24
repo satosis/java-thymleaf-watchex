@@ -23,9 +23,9 @@ public class AdminUserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("users")
+    @GetMapping("")
     public String get(Model model, @RequestParam Map<String, String> params) {
-        int page = 0;
+        int page = 1;
         if (params.get("page") != null) {
             page = Integer.parseInt(params.get("page"));
         }
@@ -40,19 +40,19 @@ public class AdminUserController {
         model.addAttribute("totalPages", users.getTotalPages());
         model.addAttribute("totalItems", users.getTotalElements());
         model.addAttribute("users", users);
-        model.addAttribute("models", "users");
+        model.addAttribute("models", "user");
         model.addAttribute("title", "Users Management");
         return model;
     }
 
-    @GetMapping("user/create")
+    @GetMapping("create")
     public String create(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("title", "Thêm người dùng");
         return "admin/users/create";
     }
 
-    @PostMapping("user/save")
+    @PostMapping("save")
     public String save(User user, RedirectAttributes ra) {
         int strength = 10; // work factor of bcrypt
 
@@ -61,7 +61,7 @@ public class AdminUserController {
         return "redirect:/admin/users";
     }
 
-    @GetMapping("user/edit/{id}")
+    @GetMapping("edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
         try {
             User user = userService.show(id);
@@ -74,14 +74,14 @@ public class AdminUserController {
         }
     }
 
-    @PostMapping("user/update")
+    @PostMapping("update")
     public String update(User user, RedirectAttributes ra) {
         userService.save(user);
         ra.addFlashAttribute("message", messageSource.getMessage("update_user_success", new Object[0], LocaleContextHolder.getLocale()));
         return "redirect:/admin/users";
     }
 
-    @GetMapping("user/delete/{id}")
+    @GetMapping("delete/{id}")
     public String save(@PathVariable("id") Integer id, RedirectAttributes ra) {
         try {
             User user = userService.show(id);

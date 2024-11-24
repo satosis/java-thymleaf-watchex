@@ -22,7 +22,7 @@ public class UserServiceImpl extends GenericServiceImpl<User, Integer> implement
     private UserRepository repository;
 
     public Page<User> get(int page) {
-        return repository.findAll(PageRequest.of(page, 10, Sort.by("id").descending()));
+        return repository.findAll(PageRequest.of(page - 1, 10, Sort.by("id").descending()));
     }
 
     @Override

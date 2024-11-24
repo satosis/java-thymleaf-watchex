@@ -20,7 +20,7 @@ public class RatingServiceImpl extends GenericServiceImpl<Rating, Integer> imple
     private RatingRepository repository;
 
     public Page<Rating> get(int page) {
-        return repository.findAll(PageRequest.of(page, 10, Sort.by("id").descending()));
+        return repository.findAll(PageRequest.of(page - 1, 10, Sort.by("id").descending()));
     }
 
     @Override

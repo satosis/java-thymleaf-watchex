@@ -21,7 +21,7 @@ public class AdminServiceImpl extends GenericServiceImpl<Admin, Integer> impleme
     private AdminRepository repository;
 
     public Page<Admin> get(int page) {
-        return repository.findAll(PageRequest.of(page, 10, Sort.by("id").descending()));
+        return repository.findAll(PageRequest.of(page - 1, 10, Sort.by("id").descending()));
     }
 
     @Override

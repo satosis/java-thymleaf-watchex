@@ -6,13 +6,14 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                [[#{user}]]
-                <small><a th:href="@{'/admin/user/create'}" class="btn btn-primary">Thêm mới</a></small>
+                Quản trị viên
+                <small><a th:href="@{'/admin/qtv/create'}" class="btn btn-primary">Thêm mới</a></small>
             </h1>
             <ol class="breadcrumb">
-                <li><a th:href="@{'/admin/user'}"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
-                <li class="active"> [[#{user}]]</li>
+                <li><a th:href="@{'/admin/qtv'}"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+                <li class="active"> Quản trị viên</li>
             </ol>
+            <!-- <div th:if="${message}" class="alert alert-success text-center mt-3">[[${message}]]</div> -->
         </section>
 
         <!-- Main content -->
@@ -22,25 +23,23 @@
                     <thead>
                     <tr>
                         <td>#</td>
-                        <td>[[#{username}]]</td>
+                        <td>Tên</td>
                         <td>Email</td>
-                        <td>[[#{phone_number}]]</td>
-                        <td>Action</td>
+                        <td>Hành động</td>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:if="${users.isEmpty()}">
+                    <tr th:if="${qtvs.isEmpty()}">
                         <th colspan="6">[[#{no_result_found}]]</th>
                     </tr>
-                    <tr th:each="user : ${users}">
-                        <td>[[${((currentPage - 1) * 10) + userStat.index + 1}]]</td>
-                        <td>[[${user.name}]]</td>
-                        <td>[[${user.email}]]</td>
-                        <td>[[${user.phone}]]</td>
+                    <tr th:each="qtv : ${qtvs}">
+                        <td>[[${((currentPage - 1) * 10) + qtvStat.index + 1}]]</td>
+                        <td>[[${qtv.name}]]</td>
+                        <td>[[${qtv.email}]]</td>
                         <td>
-                            <a th:href="@{'/admin/user/edit/' + ${user.id}}" class="btn btn-secondary"><i
+                            <a th:href="@{'/admin/qtv/edit/' + ${qtv.id}}" class="btn btn-secondary"><i
                                     class="fa fa-edit"></i> [[#{edit}]]</a>
-                            <a th:href="@{'/admin/user/delete/' + ${user.id}}" class="btn btn-secondary"><i
+                            <a th:href="@{'/admin/qtv/delete/' + ${qtv.id}}" class="btn btn-secondary" th:if="${@commonConfigurations.getCurrentAdmin.getId() != qtv.id}"><i
                                     class="fa fa-trash text-danger"></i> [[#{delete}]]</a>
                         </td>
                     </tr>

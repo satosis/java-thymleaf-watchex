@@ -2,32 +2,183 @@
 <div class="wrapper">
   <div th:replace="/fragments/admin/header :: header"></div>
   <div th:replace="/fragments/admin/sidebar :: aside"></div>
-  <div class="content-wrapper" style="min-height: 902.55px;">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        [[#{create}]] [[#{product}]]
-      </h1>
-      <ol class="breadcrumb">
-        <li><a th:href="@{'/admin'}"><i class="fa fa-dashboard"></i>[[#{home}]]</a></li>
-        <li><a th:href="@{'/admin/products'}"><i class="fa fa-dashboard"></i>[[#{product}]]</a></li>
-        <li class="active">[[#{create}]]</li>
-      </ol>
-    </section>
+  <div class="content-wrapper">
 
+    <section class="content-header">
+        <!-- Content Header (Page header) -->
+        <h1> Thêm sản phẩm</h1>
+        <ol class="breadcrumb">
+            <li><a href="{{route('admin.index') }}"> Trang chủ</a></li>
+            <li><a href="{{ route('admin.product.index') }}">Sản phẩm</li>
+            >
+            <li><a href="#" class="active">Thêm mới</a></li>
+        </ol>
+    </section>
     <!-- Main content -->
     <section class="content">
-      <form th:action="@{'/admin/product/save'}" method="post" th:object="${product}" class="col-md-8">
-        <div class="form-group">
-          <label for="name">[[#{name}]]</label>
-          <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter name">
-        </div>
-        <button type="submit" class="btn btn-primary">[[#{submit}]]</button>
-        <a th:href="@{'/admin/products'}" class="btn btn-danger">[[#{back}]]</a>
-      </form>
+      <div class="row">
+        <form th:action="@{'/admin/product/save'}" role="form" method="POST" enctype="multipart/form-data"  th:object="${productDto}">
+            <div class="col-md-8">
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin cơ bản</h3>
+                    </div>
+                    <div class="box-body">
+                        <div th:class="${#fields.hasErrors('pro_name')} ? 'has-error form-group' : 'form-group'">
+                          <label for="name">Tên sản phẩm</label>
+                          <input type="text" class="form-control" name="pro_name" id="name"
+                          th:field="*{pro_name}" placeholder="Áo bóng đá..."
+                                   autocomplete="off">
+                          <p th:if="${#fields.hasErrors('pro_name')}" class="text-danger" th:errors="*{pro_name}"></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div th:class="${#fields.hasErrors('pro_price')} ? 'has-error form-group' : 'form-group'">
+                                    <label for="pass">Giá sản phẩm</label>
+                                    <input type="text" class="form-control"
+                                    th:field="*{pro_price}" name="pro_price" id="pass"
+                                           placeholder="2.000.000" autocomplete="off">
+                                           <p th:if="${#fields.hasErrors('pro_price')}" class="text-danger" th:errors="*{pro_price}"></p>
+                                </div>
+                            </div>
 
+                            <div class="col-sm-3">
+                                <div th:class="${#fields.hasErrors('pro_sale')} ? 'has-error form-group' : 'form-group'">
+                                    <label for="pass">Giảm giá</label>
+                                    <input type="number" class="form-control" name="pro_sale" id="pass"
+                                    th:field="*{pro_sale}" placeholder="10"
+                                           autocomplete="off">
+                                           <p th:if="${#fields.hasErrors('pro_sale')}" class="text-danger" th:errors="*{pro_sale}"></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div th:class="${#fields.hasErrors('pro_amount')} ? 'has-error form-group' : 'form-group'">
+                                    <label for="pass">Số lượng</label>
+                                    <input type="number" class="form-control" name="pro_amount" id="pass"
+                                    th:field="*{pro_amount}" placeholder="10"
+                                           autocomplete="off">
+                                           <p th:if="${#fields.hasErrors('pro_amount')}" class="text-danger" th:errors="*{pro_amount}"></p>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+
+                            <div class="col-md-12" style="margin-bottom:20px">
+                                @if(isset($image))
+                                    <div class="row">
+                                        @foreach($image as $item)
+                                            <div class="col-sm-2 position-relative" style="margin: 10px;">
+                                                <div class="remove" style="width: 25px;height: 25px;background: red;border-radius: 50%;color: black;position: absolute;display: flex;justify-content: center;margin-top: -10px;margin-left: -15px;cursor:poiter">
+                                                <a href="{{ route('admin.product.delete_image',$item->id)}}">
+                                                        <i class="fa fa-trash-o" style="color: white;padding-top:5px"></i>
+                                                </a>
+                                                </div>
+                                                <a
+                                                        href="javascript:;"
+                                                        style="display:block">
+                                                    <img src="{{ pare_url_file($item->al_slug)}}"
+                                                         style="width:100px;height:100px;object-fit:cover"></a></div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Album ảnh</h3>
+                                    <input type="file" class="file" name="file[]" id="images" multiple th:field="*{file}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div th:class="${#fields.hasErrors('keywordseo')} ? 'has-error form-group' : 'form-group'">
+                                    <label for="da">Từ khóa mới</label><br>
+                                    <input type="text" data-role="tagsinput" class="form-control" id="da" name="keywordseo"
+                                    th:field="*{keywordseo}">
+                                    <p th:if="${#fields.hasErrors('keywordseo')}" class="text-danger" th:errors="*{keywordseo}"></p>
+
+                                </div>
+                            </div>
+                            <div class="col-md-11">
+                                <div class="form-group">
+                                    <label for="fs" class="control-label">Từ khóa có sẵn <b class="col-red">(*)</b></label>
+                                    <select name="keywords[]" id="fs" class="form-control js-select2-keyword" multiple="">
+
+                                        @foreach($keywords as $listcate)
+                                            <option value="{{ $listcate->id }}" {{ in_array($listcate->id,$keywordOld) ? "selected='selected'" : "" }}>
+                                                {{$listcate ->k_name}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <div th:class="${#fields.hasErrors('pro_description')} ? 'has-error form-group' : 'form-group'">
+                                    <label for="des">Mô tả</label>
+                                    <textarea name="pro_description" id="des" cols="5" rows="2" autocomplete="off"  th:field="*{pro_description}"
+                                              class="form-control"></textarea>
+                                              <p th:if="${#fields.hasErrors('pro_description')}" class="text-danger" th:errors="*{pro_description}"></p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fs" class="control-label">Danh mục <b class="col-red">(*)</b></label>
+                            <select name="pro_category" id="fs" class="form-control">
+                                @foreach($category as $listcate)
+                                    <option value="{{ $listcate->id }}" {{ ($product->pro_category ?? '') == $listcate->id ? "selected='selected'" :""}}>
+                                        {{$listcate ->c_name}}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <p th:if="${#fields.hasErrors('pro_category')}" class="text-danger" th:errors="*{pro_category}"></p>
+                          </div>
+                    </div>
+                </div>
+
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Nội dung</h3>
+                    </div>
+                    <div class="box-body">
+                        <div th:class="${#fields.hasErrors('pro_content')} ? 'has-error form-group' : 'form-group'">
+                            <textarea name="pro_content" th:field="*{pro_content}" id="content"></textarea>
+                            <p th:if="${#fields.hasErrors('pro_content')}" class="text-danger" th:errors="*{pro_content}"></p>
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Ảnh đại diện</h3>
+                    </div>
+                    <div class="box-body block-images">
+                        <div style="margin-bottom: 10px" class="image-area">
+                            <img th:src="${view/img/no-image.png}" class="img-thumbnail"/>
+                        </div>
+                        <!-- <div style="position:relative;"> <a class="btn btn-primary" href="javascript:;"> Choose File...
+                        <input type="file" name="pro_avatar" size="40" class="d-none js-upload"> </a> &nbsp; <span class="label label-info" id="upload-file-info"></span> </div> -->
+                        <label for="thumbnail-stage" class="btn btn-primary">Choose File...</label>
+                        <input class="imageID d-none" type="file" id="thumbnail-stage" name="thumbnail_stage" style="display:none"  th:field="*{thumbnail_stage}"
+                               accept="image/*">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 clearfix">
+                <div class="box-footer text-center">
+                    <a th:href="@{'/admin/product'}" class="btn btn-default"><i class="fa fa-arrow-left"></i>Quay lại</a>
+                    <button type="submit" class="btn btn-success"><i
+                                class="fa fa-save"></i>Thêm mới"</button>
+                </div>
+        </form>
+    </div>
     </section>
     <!-- /.content -->
-  </div>
+    </section>
+    <!-- /.content-wrapper -->
+</div>
+
 </div>
 <div th:include="/fragments/admin/footer"></div>

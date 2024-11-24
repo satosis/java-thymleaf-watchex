@@ -23,7 +23,7 @@ public class TransactionServiceImpl extends GenericServiceImpl<Transaction, Inte
     private TransactionRepository repository;
 
     public Page<Transaction> get(int page) {
-        return repository.findAll(PageRequest.of(page, 10, Sort.by("id").descending()));
+        return repository.findAll(PageRequest.of(page - 1, 10, Sort.by("id").descending()));
     }
 
     @Override

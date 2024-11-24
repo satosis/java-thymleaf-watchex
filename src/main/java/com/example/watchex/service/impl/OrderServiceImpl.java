@@ -1,6 +1,7 @@
 package com.example.watchex.service.impl;
 
 import com.example.watchex.entity.Order;
+import com.example.watchex.entity.Transaction;
 import com.example.watchex.repository.OrderRepository;
 import com.example.watchex.repository.TransactionRepository;
 import com.example.watchex.service.OrderService;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,13 +23,18 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Integer> impleme
     private OrderRepository repository;
 
     public Page<Order> get(int page) {
-        return repository.findAll(PageRequest.of(page, 10, Sort.by("id").descending()));
+        return repository.findAll(PageRequest.of(page - 1, 10, Sort.by("id").descending()));
     }
 
     @Override
     public Order show(Integer id) {
         Optional<Order> result = repository.findById(id);
         return result.orElse(null);
+    }
+    @Override
+    public List<Order> getByTransaction(Transaction transaction) {
+        List<Order> result = repository.getByTransaction(transaction);
+        return result;
     }
 
 }

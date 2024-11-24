@@ -10,20 +10,26 @@
       </h1>
       <ol class="breadcrumb">
         <li><a th:href="@{'/admin'}"><i class="fa fa-dashboard"></i>[[#{home}]]</a></li>
-        <li><a th:href="@{'/admin/keywords'}"><i class="fa fa-dashboard"></i>[[#{keyword}]]</a></li>
+        <li><a th:href="@{'/admin/keyword'}"><i class="fa fa-dashboard"></i>[[#{keyword}]]</a></li>
         <li class="active">[[#{create}]]</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <form th:action="@{'/admin/keyword/save'}" method="post" th:object="${keyword}" class="col-md-8">
-        <div class="form-group">
+      <form th:action="@{'/admin/keyword/save'}" method="post" th:object="${keywordDto}" class="col-md-8">
+        <div th:class="${#fields.hasErrors('k_name')} ? 'has-error form-group' : 'form-group'">
           <label for="name">[[#{name}]]</label>
-          <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter name">
+          <input type="text" class="form-control" id="name" th:field="*{k_name}" placeholder="Tên từ khóa">
+          <p th:if="${#fields.hasErrors('k_name')}" class="text-danger" th:errors="*{k_name}"></p>
         </div>
-        <button type="submit" class="btn btn-primary">[[#{submit}]]</button>
-        <a th:href="@{'/admin/keywords'}" class="btn btn-danger">[[#{back}]]</a>
+        <div th:class="${#fields.hasErrors('k_description')} ? 'has-error form-group' : 'form-group'">
+          <label for="description">[[#{description}]]</label>
+          <input type="text" class="form-control" id="description" th:field="*{k_description}" placeholder="Mô tả">
+          <p th:if="${#fields.hasErrors('k_description')}" class="text-danger" th:errors="*{k_description}"></p>
+        </div>
+        <a th:href="@{'/admin/keyword'}" class="btn btn-danger"><i class="fa fa-undo"></i> Quay lại</a>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Thêm</button>
       </form>
 
     </section>

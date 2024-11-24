@@ -17,7 +17,7 @@ public class KeywordService {
     private KeywordRepository keywordRepository;
 
     public Page<Keyword> get(int page) {
-        return keywordRepository.findAll(PageRequest.of(page, 10, Sort.by("id").descending()));
+        return keywordRepository.findAll(PageRequest.of(page - 1, 10, Sort.by("id").descending()));
     }
 
     public List<Keyword> getAll() {

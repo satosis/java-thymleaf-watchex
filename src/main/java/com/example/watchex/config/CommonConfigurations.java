@@ -61,6 +61,11 @@ public class CommonConfigurations implements WebMvcConfigurer {
         return String.format("%,.0f", formatPrice);
     }
 
+    @Autowired
+    public static String formatPriceString(String price, int sale, int numberDecimal) {
+        int newPrice = Integer.parseInt(price);
+        return formatPrice(newPrice, sale, numberDecimal);
+    }
     public static User getCurrentUser() {
         return CommonUtils.getCurrentUser();
     }

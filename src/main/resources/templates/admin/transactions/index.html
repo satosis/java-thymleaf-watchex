@@ -1,0 +1,138 @@
+<div th:include="/fragments/admin/layout"></div>
+<div class="wrapper">
+    <div th:replace="/fragments/admin/header :: header"></div>
+    <div th:replace="/fragments/admin/sidebar :: aside"></div>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+
+        <section class="content">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="box-title">
+                        <form class="form-inline">
+                            <input type="text" class="form-control" th:value="${id}" name="id"
+                                   placeholder="ID">
+                            <input type="text" class="form-control" th:value="${email}" name="email"
+                                   placeholder="Email ...">
+                            <select name="status" class="form-control">
+                                <option value="">Trạng thái</option>
+                                <option value="5" th:selected="${status == 5} ? 'selected' : ''">Chờ xác nhận</option>
+                                <option value="2" th:selected="${status == 2} ? 'selected' : ''">Đang vận chuyển
+                                </option>
+                                <option value="3" th:selected="${status == 3} ? 'selected' : ''">Đã giao hàng</option>
+                                <option value="4" th:selected="${status == 4} ? 'selected' : ''">Hoàn thành</option>
+                                <option value="-1" th:selected="${status == -1} ? 'selected' : ''">Đã hủy</option>
+                            </select>
+                            <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> Search</button>
+                        </form>
+                    </div>
+                    <table class="table text-center">
+                        <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>Khách hàng</td>
+                            <td>Số tiền</td>
+                            <td>Cổng thanh toán</td>
+                            <td>Trạng thái</td>
+                            <td>Thời gian</td>
+                            <td>Hành động</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${transactions.isEmpty()}">
+                            <th colspan="9">[[#{no_result_found}]]</th>
+                        </tr>
+                        <tr th:each="transaction : ${transactions}">
+                            <td>[[${((currentPage - 1) * 10) + transactionStat.index + 1}]]</td>
+                            <td>
+                                <ul>
+                                    <li>Tên :[[${transaction.tst_name}]]</li>
+                                    <li>Email: [[${transaction.tst_email}]]</li>
+                                    <li>Điện thoại : [[${transaction.tst_phone}]]</li>
+                                    <li>Địa chỉ: [[${transaction.tst_address}]]</li>
+                                    <li>Ghi chú: [[${transaction.tst_note}]]</li>
+                                </ul>
+                            </td>
+                            <td>[[${@commonConfigurations.formatPriceString(transaction.tst_total_money, 0, 0)}]]đ</td>
+
+                            <td th:if="${transaction.tst_type == 1}">
+                                Trực tiếp
+                            </td>
+                            <td th:if="${transaction.tst_type == 2}">
+                                Online
+                            </td>
+                            <td>
+                        <span th:class="${transaction.getClassStatus()}">
+      [[${transaction.getStatus()}]]
+      </span>
+                            </td>
+                            <td>[[${transaction.createdAt}]]</td>
+                            <td>
+                                <a data-id="{{ $list->id }}" href="javascript:;"
+                                   th:data-href="@{/admin/transaction/detail/{id}(id=${transaction.id})}" class="btn-xs btn btn-primary js-preview-transaction
+      "><i class="fa fa-eye"></i> View</a>
+                                <div class="btn-group"
+                                     th:if="${transaction.tst_status != -1 && transaction.tst_status != 4}">
+                                    <button class="btn btn-success btn-xs">Action</button>
+                                    <button class="btn btn-success  btn-xs dropdown-toggle" data-toggle="dropdown"
+                                            aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a th:href="@{/admin/transaction/status/waiting_confirmation/{id}(id=${transaction.id})}">
+                                                <i class="fa fa-ban"></i>Chờ xác nhận</a></li>
+                                        <li>
+                                            <a th:href="@{/admin/transaction/status/confirmed/{id}(id=${transaction.id})}">
+                                                <i class="fa fa-ban"></i>Đã xác nhận</a></li>
+                                        <li>
+                                            <a th:href="@{/admin/transaction/status/process/{id}(id=${transaction.id})}">
+                                                <i class="fa fa-ban"></i>Đang bàn giao</a></li>
+                                        <li>
+                                            <a th:href="@{/admin/transaction/status/success/{id}(id=${transaction.id})}">
+                                                <i class="fa fa-ban"></i>Đã giao hàng</a></li>
+                                        <li>
+                                            <a th:href="@{/admin/transaction/status/confirm/{id}(id=${transaction.id})}">
+                                                <i class="fa fa-ban"></i>Hoàn thành</a></li>
+                                        <li><a th:href="@{/admin/transaction/status/cancel/{id}(id=${transaction.id})}">
+                                            <i class="fa fa-ban"></i>Hủy</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <div class="box-footer" th:include="/fragments/user/pagination"></div>
+        <!-- /.content -->
+    </div>
+
+    <!-- /.content-wrapper -->
+
+    <div class="modal fade fade" id="modal-preview-transaction">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title"> Chi tiết đơn hàng <b id="idTransaction">#1</b></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="content">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+<div th:include="/fragments/admin/footer"></div>

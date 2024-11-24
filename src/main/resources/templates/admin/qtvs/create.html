@@ -1,0 +1,90 @@
+<div th:include="/fragments/admin/layout"></div>
+<div class="wrapper">
+    <div th:replace="/fragments/admin/header :: header"></div>
+    <div th:replace="/fragments/admin/sidebar :: aside"></div>
+    <div class="content-wrapper">
+
+        <section class="content-header">
+            <!-- Content Header (Page header) -->
+            <h1> Thêm mới quản trị viên</h1>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <form th:action="@{'/admin/qtv/save'}" method="POST" enctype="multipart/form-data" autocomplete="off"
+                      th:object="${adminDto}">
+                    <div class="col-md-12">
+                        <div class="box box-warning">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Thông tin cơ bản</h3>
+                            </div>
+                            <div class="box-body">
+                                <div th:class="${#fields.hasErrors('name')} ? 'has-error form-group' : 'form-group'">
+                                    <label for="name">Tên quản trị viên</label>
+                                    <input type="text" class="form-control" id="name"
+                                           th:field="*{name}" placeholder="Tên quản trị viên..."
+                                           autocomplete="off">
+                                    <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="text" class="form-control" id="email"
+                                                   th:field="*{email}" placeholder="Email..."
+                                                   autocomplete="off">
+                                            <p th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></p>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div th:class="${#fields.hasErrors('password')} ? 'has-error form-group' : 'form-group'">
+                                            <label for="pwd">Mật khẩu</label>
+                                            <input type="password" class="form-control" th:field="*{password}" id="pwd"
+                                                   autocomplete="off">
+                                            <p th:if="${#fields.hasErrors('password')}" class="text-danger"
+                                               th:errors="*{password}"></p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div th:class="${#fields.hasErrors('password_confirmation')} ? 'has-error form-group' : 'form-group'">
+                                            <label for="password_confirmation">Xác nhận mật khẩu</label>
+                                            <input type="password" id="password_confirmation"
+                                                   th:field="*{password_confirmation}" class="form-control"
+                                                   autocomplete="off">
+                                            <p th:if="${#fields.hasErrors('password_confirmation')}" class="text-danger"
+                                               th:errors="*{password_confirmation}"></p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12 clearfix">
+                        <div class="box-footer text-center">
+                            <a th:href="@{'/admin/qtv'}" class="btn btn-default"><i class="fa fa-arrow-left"></i>Quay
+                                lại</a>
+                            <button type="submit" class="btn btn-success"><i
+                                    class="fa fa-save"></i>Thêm mới
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </section>
+        <!-- /.content -->
+        </section>
+        <!-- /.content-wrapper -->
+    </div>
+</div>
+<div th:include="/fragments/admin/footer"></div>

@@ -1,0 +1,52 @@
+<div th:include="/fragments/admin/layout"></div>
+<div class="wrapper">
+    <div th:replace="/fragments/admin/header :: header"></div>
+    <div th:replace="/fragments/admin/sidebar :: aside"></div>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a th:href="@{'/admin/rating'}" ><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+                <li class="active"> [[#{rating}]]</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="col-md-12">
+            <table class="table text-center">
+                <thead>
+                    <th>#</th>
+                    <th>Người đăng</th>
+                    <th>Sản phẩm</th>
+                    <th style="float:left">Đánh giá</th>
+                    <th>Nội dung</th>
+                    <th>Phản hồi lúc</th>
+                    </thead>
+                <tbody>
+                <tr th:if="${ratings.isEmpty()}">
+                    <th colspan="9">[[#{no_result_found}]]</th>
+                </tr>
+                <tr th:each="rating : ${ratings}">
+                    <td>[[${((currentPage - 1) * 10) + ratingStat.index + 1}]]</td>
+                    <td>[[${rating.r_user_id.name}]]</td>
+                    <td>[[${rating.product.pro_name}]]</td>
+                    <td style="float:left" th:each="i: ${#numbers.sequence(1, rating.r_number)}">
+                        <i class="fa fa-star" ></i>
+                    </td>
+                    <td>[[${rating.r_content}]]</td>
+                    <td>[[${rating.createdAt}]]</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer" th:include="/fragments/user/pagination">
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+</div>
+<!-- /.content-wrapper -->
+<div th:include="/fragments/admin/footer"></div>

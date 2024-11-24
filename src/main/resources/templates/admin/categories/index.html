@@ -2,22 +2,23 @@
 <div class="wrapper">
     <div th:replace="/fragments/admin/header :: header"></div>
     <div th:replace="/fragments/admin/sidebar :: aside"></div>
-    <div class="content-wrapper" style="min-height: 902.55px;">
+    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
                 [[#{category}]]
-                <a th:href="@{'/admin/category/create'}" class="btn btn-primary">[[#{create}]]</a>
+                <small><a th:href="@{'/admin/category/create'}" class="btn btn-primary">Thêm mới</a></small>
             </h1>
             <ol class="breadcrumb">
-                <li><a th:href="@{'/admin'}"><i class="fa fa-dashboard"></i>[[#{home}]]</a></li>
-                <li class="active">[[#{category}]]</li>
+                <li><a th:href="@{'/admin/category'}" ><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+                <li class="active"> [[#{category}]]</li>
             </ol>
-            <div th:if="${message}" class="alert alert-success text-center mt-3">[[${message}]]</div>
+            <!-- <div th:if="${message}" class="alert alert-success text-center mt-3">[[${message}]]</div> -->
         </section>
 
         <!-- Main content -->
         <section class="content">
+            <div class="col-md-12">
             <table class="table text-center">
                 <thead>
                 <tr>
@@ -32,11 +33,11 @@
                     <th colspan="4">[[#{no_result_found}]]</th>
                 </tr>
                 <tr th:each="category : ${categories}">
-                    <td>[[${categoryStat.index + 1}]]</td>
-                    <td>[[${category.name}]]</td>
-                    <td th:if="${category.getType()} == 0">Đồng hồ chính hãng</td>
-                    <td th:if="${category.getType()} == 1">Kính mắt thời trang</td>
-                    <td th:if="${category.getType()} == 2">Phụ kiện đồng hồ</td>
+                    <td>[[${((currentPage - 1) * 10) + categoryStat.index + 1}]]</td>
+                    <td>[[${category.c_name}]]</td>
+                    <td th:if="${category.c_cate} == 'watch'">Đồng hồ chính hãng</td>
+                    <td th:if="${category.c_cate} == 'glass'">Kính mắt thời trang</td>
+                    <td th:if="${category.c_cate} == 'accessories'">Phụ kiện đồng hồ</td>
                     <td>
                         <a th:href="@{'/admin/category/edit/' + ${category.id}}" class="btn btn-secondary"><i class="fa fa-edit"></i> [[#{edit}]]</a>
                         <a th:href="@{'/admin/category/delete/' + ${category.id}}" class="btn btn-secondary"><i class="fa fa-trash text-danger"></i> [[#{delete}]]</a>
@@ -44,10 +45,14 @@
                 </tr>
                 </tbody>
             </table>
-            <div th:include="/fragments/user/pagination"></div>
 
-        </section>
-        <!-- /.content -->
-    </div>
+        </div>
+        <div class="box-footer" th:include="/fragments/user/pagination">
+        </div>
+    </section>
+    <!-- /.content -->
 </div>
+</div>
+<!-- /.content-wrapper -->
+
 <div th:include="/fragments/admin/footer"></div>

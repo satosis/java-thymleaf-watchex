@@ -17,7 +17,7 @@ public class CategoryService {
     private CategoryRepository repository;
 
     public Page<Category> get(int page) {
-        return repository.findAll(PageRequest.of(page, 10, Sort.by("id").descending()));
+        return repository.findAll(PageRequest.of(page - 1, 10, Sort.by("id").descending()));
     }
 
     public List<Category> getAll() {
