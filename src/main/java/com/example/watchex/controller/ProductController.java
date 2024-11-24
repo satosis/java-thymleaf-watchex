@@ -2,21 +2,20 @@ package com.example.watchex.controller;
 
 import com.example.watchex.dto.ProductDto;
 import com.example.watchex.dto.RatingDto;
-import com.example.watchex.entity.Cart;
-import com.example.watchex.entity.Category;
-import com.example.watchex.entity.UserFavourite;
+import com.example.watchex.entity.*;
+import com.example.watchex.exceptions.MessageEntity;
 import com.example.watchex.repository.RatingRepository;
+import com.example.watchex.response.RatingResponse;
 import com.example.watchex.service.CategoryService;
 import com.example.watchex.service.ProductService;
 import com.example.watchex.service.UserFavouriteService;
+import com.example.watchex.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -54,11 +53,14 @@ public class ProductController {
         return "product/list";
     }
     @GetMapping("/{slug}")
-    public String detail(@PathVariable("slug") String slug, Model model) {
+    public String detail(@PathVariable("slug") String slug, Model model) throws ClassNotFoundException {
+        User user = CommonUtils.getCurrentUser();
         List<Category> categories = categoryService.getAll();
         ProductDto product = productService.findBySlug(slug);
-
+        Product entityProduct = productService.show(product.getId());
         List<RatingDto> ratings = ratingRepository.getRatingProduct(product.getId());
+        List<Rating> listRating = ratingRepository.getListRatingProduct(entityProduct);
+        List<Rating> myRating = ratingRepository.getMyRatingProduct(entityProduct, user);
         List<ProductDto> productSuggest = productService.getProductsByCategory(product.getCategory().getId(), 3);
         UserFavourite userFavourite = userFavouriteService.getByProductId(product);
         String[] tags= product.getKeywordseo().split(",");
@@ -68,6 +70,8 @@ public class ProductController {
         model.addAttribute("categories", categories);
         model.addAttribute("productSuggest", productSuggest);
         model.addAttribute("userFavourite", userFavourite);
+        model.addAttribute("myRating", myRating);
+        model.addAttribute("listRating", listRating);
         model.addAttribute("tags", tags);
         return "product/detail";
     }
@@ -89,5 +93,22 @@ public class ProductController {
         model.addAttribute("title", category.getC_name());
         model.addAttribute("models", "/product/category/" + slug);
         return "product/list";
+    }
+
+    @PostMapping("rating/{id}")
+    public ResponseEntity<MessageEntity> rating(@PathVariable("id") Integer id, @RequestParam Map<String, String> params, Model model) throws ClassNotFoundException {
+        User user = CommonUtils.getCurrentUser();
+        Product product = productService.show(id);
+        Rating rating = new Rating();
+        rating.setR_user_id(user);
+        rating.setProduct(product);
+        rating.setR_content(params.get("content"));
+        rating.setR_number(Integer.valueOf(params.get("review")));
+        rating.setR_status(1);
+        ratingRepository.save(rating);
+        RatingResponse response = RatingResponse.builder()
+                .message("Cập nhật thành công")
+                .build();
+        return ResponseEntity.ok(new MessageEntity(200, response));
     }
 }

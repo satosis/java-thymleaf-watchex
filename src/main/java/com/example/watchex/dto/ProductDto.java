@@ -2,65 +2,73 @@ package com.example.watchex.dto;
 
 import com.example.watchex.entity.Category;
 import com.example.watchex.entity.Keyword;
+import com.example.watchex.entity.ProductImage;
 import com.example.watchex.entity.Rating;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.Set;
 
-public interface ProductDto {
-    Integer getId();
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ProductDto {
+    private Integer id;
 
-    String getPro_name();
+    private String pro_name;
 
-    String getPro_avatar();
+    private String pro_avatar;
 
-    String getPro_slug();
+    private String pro_slug;
 
-    Integer getPro_amount();
+    private Integer pro_amount;
 
-    Integer getPro_view();
+    private Integer pro_view;
 
-    Integer getPro_price();
+    private Integer pro_price;
 
-    Integer getPro_sale();
+    private Integer pro_sale;
 
-    Category getCategory();
+    private Category category;
 
-    Integer getPro_favourite();
+    private Integer pro_favourite;
 
-    Integer getPro_hot();
+    private Integer pro_hot;
 
-    Integer getPro_active();
+    private Integer pro_active;
 
-    Integer getPro_admin_id();
+    private Integer pro_admin_id;
 
-    Integer getPro_pay();
+    private Integer pro_pay;
 
-    String getPro_description();
+    private String pro_description;
 
-    String getPro_content();
+    private String pro_content;
 
-    Integer getPro_review_total();
+    private Integer pro_review_total;
 
-    String getKeywordseo();
+    private String Keywordseo;
 
-    Integer getPro_review_star();
+    private Integer pro_review_star;
 
-    String get_wysihtml5_mode();
+    private String _wysihtml5_mode;
 
-    Set<Keyword> getKeyword();
+    private Set<Keyword> keywords;
+    private Set<ProductImage> productImages;
 
-    Set<Rating> getRatings();
+    private Set<Rating> getRatings;
 
-    Date getCreatedAt();
+    private Date CreatedAt;
 
-    Date getUpdatedAt();
+    private Date UpdatedAt;
 
-    default Integer getStar() {
-        if (getPro_review_total() > 0) {
-            return (getPro_review_star() - 5 ) / getPro_review_total();
+    Integer getStar() {
+        if (pro_review_star > 0) {
+            return (pro_review_star - 5) / pro_review_total;
         }
-        return getPro_review_star();
+        return pro_review_star;
     }
 
 

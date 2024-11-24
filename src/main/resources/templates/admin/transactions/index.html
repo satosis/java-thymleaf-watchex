@@ -9,24 +9,6 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-header with-border">
-                    <div class="box-title">
-                        <form class="form-inline">
-                            <input type="text" class="form-control" th:value="${id}" name="id"
-                                   placeholder="ID">
-                            <input type="text" class="form-control" th:value="${email}" name="email"
-                                   placeholder="Email ...">
-                            <select name="status" class="form-control">
-                                <option value="">Trạng thái</option>
-                                <option value="5" th:selected="${status == 5} ? 'selected' : ''">Chờ xác nhận</option>
-                                <option value="2" th:selected="${status == 2} ? 'selected' : ''">Đang vận chuyển
-                                </option>
-                                <option value="3" th:selected="${status == 3} ? 'selected' : ''">Đã giao hàng</option>
-                                <option value="4" th:selected="${status == 4} ? 'selected' : ''">Hoàn thành</option>
-                                <option value="-1" th:selected="${status == -1} ? 'selected' : ''">Đã hủy</option>
-                            </select>
-                            <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> Search</button>
-                        </form>
-                    </div>
                     <table class="table text-center">
                         <thead>
                         <tr>

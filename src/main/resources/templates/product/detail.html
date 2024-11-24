@@ -37,7 +37,7 @@
                             </a>
                             <i class="fa fa-eye"></i>&nbsp;[[${product.pro_view}]]
                             <a th:href="@{/product/favourite/{id}(id=${product.id})}"
-                               th:class="${user} ? 'js-add-favourite' : 'js-login js-add-favourite'">
+                               th:class="${@commonConfigurations.getCurrentUser} ? 'js-add-favourite' : 'js-login js-add-favourite'">
                                 <i th:class="${userFavourite} ?  'fa fa-heart red' : 'fa fa-heart-o'"></i>
                             </a>&nbsp;
                             <div class="favourite" style="position: absolute;bottom: 0;margin-left: 60px;">
@@ -76,7 +76,8 @@
                             </div>
                         </h3>
                         <div class="btnCart">
-                            <a th:class="${@commonConfigurations.getCurrentUser} ? 'muangay' : 'js-login muangay'" th:href="@{/cart/add/{id}(id=${product.id})}">
+                            <a th:class="${@commonConfigurations.getCurrentUser} ? 'muangay' : 'js-login muangay'"
+                               th:href="@{/cart/add/{id}(id=${product.id})}">
                                 <span>Mua ngay</span>
                                 <span>Giao hàng miễn phí - Thanh toán tại nhà</span>
                             </a>
@@ -85,7 +86,8 @@
                             <legend>Từ khóa</legend>
                             <i class="fa fa-tag"></i>
                             <p th:each="tag: ${tags}">
-                                <a href="javascript:;" style="color: #00d4c0 !important;font-size:20px" th:ìf="${tag != null}"># [[${tag}]]</a>
+                                <a href="javascript:;" style="color: #00d4c0 !important;font-size:20px"
+                                   th:ìf="${tag != null}"># [[${tag}]]</a>
                             </p>
                         </div>
                     </div>
@@ -201,7 +203,9 @@
                                     </div>
                                 </div>
                                 <div class="lstBtn">
-                                    <a th:href="@{/cart/add/{id}(id=${product.id})}" th:class="${@commonConfigurations.getCurrentUser} ? 'buttn muangay' : 'js-login buttn muangay'" >Mua ngay</a>
+                                    <a th:href="@{/cart/add/{id}(id=${product.id})}"
+                                       th:class="${@commonConfigurations.getCurrentUser} ? 'buttn muangay' : 'js-login buttn muangay'">Mua
+                                        ngay</a>
                                 </div>
                             </div>
                         </div>
@@ -275,7 +279,8 @@
                                     </span>
                                     <span class="score-max">/5</span></div>
                                 <div class="average">
-                                    <div class="container-star " style="width: 166.25px; height: 33.25px;" th:if="${product.star == 0}">
+                                    <div class="container-star " style="width: 166.25px; height: 33.25px;"
+                                         th:if="${product.star == 0}">
                                         <img class="star"
                                              src="//laz-img-cdn.alicdn.com/tfs/TB18ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png"
                                              style="width: 33.25px; height: 33.25px;">
@@ -295,138 +300,132 @@
                                     <div class="container-star " style="width: 166.25px; height: 33.25px;" th:else>
                                         <img class="star"
                                              src="//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png"
-                                             style="width: 33.25px; height: 33.25px;" th:each="i : ${#numbers.sequence(1, product.star)}">
+                                             style="width: 33.25px; height: 33.25px;"
+                                             th:each="i : ${#numbers.sequence(1, product.star)}">
 
                                         <img class="star"
                                              src="//laz-img-cdn.alicdn.com/tfs/TB18ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png"
-                                             style="width: 33.25px; height: 33.25px;" th:if="${product.star < 5}" th:each="i : ${#numbers.sequence(product.star, 5)}">
-                                    </div>
+                                             style="width: 33.25px; height: 33.25px;" th:if="${product.star < 5}"
+                                             th:each="i : ${#numbers.sequence(product.star, 5)}">
                                     </div>
                                 </div>
-                                <div class="count"> [[${product.pro_review_star}]] đánh giá</div>
                             </div>
-                            <div class="detail" th:each="star: ${#numbers.sequence(1, 5)}">
-                                <ul>
-                                    <li>
-                                        <div class="container-star progress-title"
-                                             style="width: 80px; height: 16px;">
-                                            <img class="star"
-                                                 src="//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png"
-                                                 th:each="i: ${#numbers.sequence(1, star)}" alt="star">
-                                            <img class="star"
-                                                 src="//laz-img-cdn.alicdn.com/tfs/TB18ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png"
-                                                 th:each="i: ${#numbers.sequence(star + 1, 5)}" alt="star">
-                                        </div>
-                                        <span class="progress-wrap">
+                            <div class="count"> [[${product.pro_review_star}]] đánh giá</div>
+                        </div>
+                        <div class="detail" th:each="star: ${#numbers.sequence(1, 5)}">
+                            <ul>
+                                <li>
+                                    <div class="container-star progress-title"
+                                         style="width: 80px; height: 16px;">
+                                        <img class="star"
+                                             src="//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png"
+                                             th:each="i: ${#numbers.sequence(1, star)}" alt="star">
+                                        <img class="star"
+                                             src="//laz-img-cdn.alicdn.com/tfs/TB18ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png"
+                                             th:each="i: ${#numbers.sequence(star + 1, 5)}" alt="star"
+                                             th:if="${star < 5 }">
+                                    </div>
+                                    <span class="progress-wrap">
                                           <div class="pdp-review-progress">
                                              <div class="bar bg"></div>
-                                             <div class="bar fg" style="width: [[${ratings[star].count_number}]]%"></div>
+                                             <div class="bar fg" style="width: 33%"></div>
                                           </div>
                                        </span>
-                                        <span class="percent"  th:if="${ratings != null}">[[${ratings}]]</span>
-                                    </li>
-                                </ul>
-                            </div>
+                                    <span class="percent" th:if="${ratings != null}">3</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div class="pdp-mod-filterSort">
-                        <span class="title">Nhận xét về sản phẩm</span>
-                        <div class="oper">
-                            <span>Lọc:</span>
-                            @php
-                            $number='Tất cả';
-                            for($i=5;$i>=1;$i--)
-                            if(Request::get('s') == $i){
-                            $number =$i;
-                            break;
-                            }
-                            @endphp
-                            <span class="condition">{{ $number}} Sao</span>
-                            <div class="next-menu next-overlay-inner expandInDown ">
-                                <ul class="next-menu-content" style="color: black;">
-                                    <li class="{{ Request::get('s') ==6 ?'active' : '' }}"><a
-                                            href="{{ route('get.product.detail',$product->pro_slug.'-'.$product->id )}}">Tất
-                                        cả Sao</a></li>
-                                    @for($i=5;$i>=1;$i--)
-                                    <li class="{{ Request::get('s') == $i ?'active' : '' }}"><a
-                                            href="{{ request()->fullUrlWithQuery(['s'=>$i]) }}">{{$i}} Sao</a>
-                                    </li>
-                                    @endfor
-                                </ul>
+            </div>
+            <div>
+            </div>
+            <div class="review_list">
+                <div class="mod-reviews" th:each="rating: ${listRating}">
+                    <div class="item">
+                        <div class="top">
+                            <div class="container-star starCtn left" style="width: 83.125px; height: 16.625px;">
+                                <img th:each="i : ${#numbers.sequence(1, rating.r_number)}" class="star"
+                                     src="//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png">
+                                <img th:each="i : ${#numbers.sequence(rating.r_number, 5)}"
+                                     th:if="${rating.r_number < 5 }" class="star"
+                                     src="//laz-img-cdn.alicdn.com/tfs/TB18ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png">
                             </div>
+                            <span class="title right">[[${rating.createdAt}]]</span>
                         </div>
-                        <div class="oper"><span
-                                class="lazada lazada-is-sort lazada-icon oper-icon"></span><span>Sắp xếp:</span><span
-                                class="condition">Liên quan</span></div>
-                    </div>
-                </div>
-                <div class="review_list">
-                    @foreach($ratings as $value =>$item)
-                    @include('layout.pages.product_detail.ratings',['rating'=>$item])
-                    @endforeach
-                    <div class="pagination-link">
-                        {!! $ratings->appends($query ?? [])->links() !!}
+                        <div class="middle"><span>bởi [[${rating.r_user_id.name}]]</span></div>
+                        <div class="item-content">
+                            <div class="content">[[${rating.r_content}]]</div>
+                        </div>
                     </div>
                 </div>
 
-                <div id="block-review" th:if="${#request.userPrincipal}">
-                    <form action="{{ route('ajax_post.user.rating.add') }}" class="form-question" method="post">
-                        <div class="item">
-                            <br><br>
-                            <div id="module_product_qna" class="pdp-block module">
-                                <div class="mod-title">
-                                    <div class="pdp-mod-section-title outer-title">Phản hồi của bạn về sản phẩm
-                                        này
+            </div>
+
+            <div id="block-review" th:if="${#request.userPrincipal}">
+                <form th:action="@{/product/rating/{id}(id=${product.id})}" class="form-question" method="post">
+                    <div class="item">
+                        <br><br>
+                        <div id="module_product_qna" class="pdp-block module">
+                            <div class="mod-title">
+                                <div class="pdp-mod-section-title outer-title">Phản hồi của bạn về sản phẩm
+                                    này
+                                </div>
+                                <br><br>
+                                <div class="top">
+                                    <div class="container-star starCtn left" id="ratings"
+                                         style="width: 223.125px; height: 16.625px;">
+                                        <i class="fa fa-star opacity cursor" style="zoom:2"
+                                           th:each="i : ${#numbers.sequence(1, 5)}"
+                                           th:data-i="${i}"></i>
+                                        <span id="review_text"></span>
+                                        <input type="hidden" id="review_value" name="review" value="5">
                                     </div>
-                                    <br><br>
-                                    <div class="top">
-                                        <div class="container-star starCtn left" id="ratings"
-                                             style="width: 223.125px; height: 16.625px;">
-                                            <i class="fa fa-star opacity cursor" style="zoom:2"
-                                               th:each="i : ${#numbers.sequence(1, 5)}"
-                                               th:data-i="${i}" ></i>
-                                            <span id="review_text"></span>
-                                            <input type="hidden" id="review_value" name="review" value="5">
-                                            <input type="hidden" id="product_id" name="product_id"
-                                                   th:value="${product.id}">
-                                        </div>
-                                    </div>
-                                    <div class="pdp-mod-qna">
-                                        <div class="qna-ask-box-container">
-                                            <div class="qna-ask-box folded">
+                                </div>
+                                <div class="pdp-mod-qna">
+                                    <div class="qna-ask-box-container">
+                                        <div class="qna-ask-box folded">
                                                 <span class="next-input next-input-single next-input-medium qna-ask-input"><input
                                                         type="text" placeholder="Viết câu hỏi của bạn ở đây"
                                                         value="" name="content" maxlength="300"
                                                         height="100%"></span>
-                                                <button type="submit"
-                                                        class=" cursor next-btn next-btn-primary next-btn-medium qna-ask-btn js-process-view">
-                                                    ĐẶT CÂU HỎI
-                                                </button>
-                                            </div>
+                                            <button type="submit"
+                                                    class=" cursor next-btn next-btn-primary next-btn-medium qna-ask-btn js-process-view">
+                                                ĐẶT CÂU HỎI
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                @if(!$rating)
-                <span class="lazada lazada-noReview lazada-icon qna-empty-icon"></span>
-                <div class="qna-empty-text">Chưa có câu hỏi cho sản phẩm này.</div>
-                <div class="qna-empty-text">Đặt câu hỏi cho nhà bán hàng và câu trả lời sẽ được hiển thị tại đây
-                </div>
-                @else
+                    </div>
+                </form>
                 <div class="qna-section-title">Câu hỏi của tôi</div>
+                <div th:if="${myRating == null}">
+                    <span class="lazada lazada-noReview lazada-icon qna-empty-icon"></span>
+                    <div class="qna-empty-text">Chưa có câu hỏi cho sản phẩm này.</div>
+                    <div class="qna-empty-text">Đặt câu hỏi cho nhà bán hàng và câu trả lời sẽ được hiển thị tại đây
+                    </div>
+                </div>
                 <ul class="qna-list">
                     <div class="review_list_personal"></div>
-                    @foreach($rating as $value =>$item)
-                    @include('layout.pages.product_detail.personal_rating',['rating'=>$item])
-                    @endforeach
-                    {!! $rating->links() !!}
-                    <br><br><br>
+                    <li class="qna-item" th:each="rating: ${myRating}">
+                        <div class="qna-item-group">
+                            <div class="middle"><span>[[${rating.r_user_id.name}]]</span></div>
+                            <div class="top">
+                                <div class="container-star starCtn left" style="width: 83.125px; height: 16.625px;">
+                                    <img th:each="i : ${#numbers.sequence(1, rating.r_number)}" class="star" src="//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png">
+                                    <img th:each="i : ${#numbers.sequence(rating.r_number, 5)}"
+                                         th:if="${rating.r_number < 5 }" class="star" src="//laz-img-cdn.alicdn.com/tfs/TB18ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png">
+                                </div>
+                                <span class="title right">[[${rating.createdAt}]]</span>
+                            </div>
+                            <div class="qna-content">[[${rating.r_content}]]</div>
+                            <div class="qna-meta"></div>
+                        </div>
+                    </li>
+                    <br/><br/><br/>
                 </ul>
-                @endif
             </div>
         </div>
     </div>
@@ -536,13 +535,8 @@
                 url: URL,
                 data: $('.form-question').serialize()
             }).done(function (result) {
-                $('.form-question')[0].reset();
-                console.log(result.html);
-                if (result.html) {
-                    $(".review_list").prepend(result.html);
-                    $(".review_list_personal").prepend(result.personal);
-                }
-                swal(result.messages, "", "success");
+                toastr.success("Thành công")
+                window.location.reload()
             })
         });
 
