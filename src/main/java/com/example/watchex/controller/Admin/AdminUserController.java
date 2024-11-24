@@ -58,7 +58,7 @@ public class AdminUserController {
 
         userService.save(user);
         ra.addFlashAttribute("message", messageSource.getMessage("create_user_success", new Object[0], LocaleContextHolder.getLocale()));
-        return "redirect:/admin/users";
+        return "redirect:/admin/user";
     }
 
     @GetMapping("edit/{id}")
@@ -70,7 +70,7 @@ public class AdminUserController {
             return "admin/users/edit";
         } catch (UserPrincipalNotFoundException exception) {
             ra.addFlashAttribute("message", exception.getMessage());
-            return "redirect:/admin/users";
+            return "redirect:/admin/user";
         }
     }
 
@@ -78,7 +78,7 @@ public class AdminUserController {
     public String update(User user, RedirectAttributes ra) {
         userService.save(user);
         ra.addFlashAttribute("message", messageSource.getMessage("update_user_success", new Object[0], LocaleContextHolder.getLocale()));
-        return "redirect:/admin/users";
+        return "redirect:/admin/user";
     }
 
     @GetMapping("delete/{id}")
@@ -87,10 +87,10 @@ public class AdminUserController {
             User user = userService.show(id);
             ra.addFlashAttribute("message", messageSource.getMessage("delete_user_success", new Object[0], LocaleContextHolder.getLocale()));
             userService.delete(id);
-            return "redirect:/admin/users";
+            return "redirect:/admin/user";
         } catch (UserPrincipalNotFoundException exception) {
             ra.addFlashAttribute("message", exception.getMessage());
-            return "redirect:/admin/users";
+            return "redirect:/admin/user";
         }
     }
 

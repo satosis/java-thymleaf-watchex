@@ -10,7 +10,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{'/admin'}"><i class="fa fa-dashboard"></i>[[#{home}]]</a></li>
-                <li><a th:href="@{'/admin/users'}"><i class="fa fa-dashboard"></i>[[#{user}]]</a></li>
+                <li><a th:href="@{'/admin/user'}"><i class="fa fa-dashboard"></i>[[#{user}]]</a></li>
                 <li class="active">[[#{edit}]]</li>
             </ol>
         </section>
@@ -32,7 +32,7 @@
                     <input type="password" id="password" class="form-control" th:field="*{password}" placeholder="Password">
                 </div>
                 <button type="submit" class="btn btn-primary">[[#{submit}]]</button>
-                <a th:href="@{'/admin/users'}" class="btn btn-danger">[[#{back}]]</a>
+                <a th:href="@{'/admin/user'}" class="btn btn-danger">[[#{back}]]</a>
             </form>
 
         </section>

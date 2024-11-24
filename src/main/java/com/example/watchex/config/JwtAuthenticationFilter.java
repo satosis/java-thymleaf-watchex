@@ -54,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String adminAuthHeader = CommonUtils.getCookie(request, "AdminAuthorization");
         final String jwt;
         final String userEmail;
-        if (adminAuthHeader != null && adminAuthHeader.startsWith("Bearer+")) {
+        if (adminAuthHeader != null && adminAuthHeader.startsWith("Bearer+") && request.getServletPath().contains("/admin") ) {
             jwt = adminAuthHeader.substring(7);
             userEmail = jwtService.extractUsername(jwt);
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
