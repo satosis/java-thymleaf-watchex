@@ -1,19 +1,16 @@
 package com.example.watchex.service;
 
+import com.example.watchex.dto.ProductDetailDto;
 import com.example.watchex.dto.ProductDto;
-import com.example.watchex.dto.RatingDto;
 import com.example.watchex.dto.SearchDto;
 import com.example.watchex.entity.Product;
-import com.example.watchex.entity.Rating;
 import com.example.watchex.repository.ProductRepository;
-import com.example.watchex.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -68,36 +65,34 @@ public class ProductService {
         throw new ClassNotFoundException("Product not found");
     }
 
-    public ProductDto findBySlug(String slug) {
+    public ProductDetailDto findBySlug(String slug) {
         return productRepository.findBySlug(slug);
     }
-    public Page<ProductDto> findBySlugCategory(String slug, Map<String, String> params) {
+    public Page<Product> findBySlugCategory(String slug, Map<String, String> params) {
         SearchDto dto = new SearchDto();
         if (params.get("page") != null) {
             dto.setPageIndex(Integer.parseInt(params.get("page")) - 1);
         }
-        if (params.get("pageSize") != null) {
-            dto.setPageSize(Integer.parseInt(params.get("pageSize")));
-        }
+        dto.setPageSize(10);
         return productRepository.findBySlugCategory(slug, PageRequest.of(dto.getPageIndex(), dto.getPageSize(), Sort.by("id").descending()));
     }
     public void delete(Integer id) {
         productRepository.deleteById(id);
     }
 
-    public List<ProductDto> getProductsAccessoriess() {
+    public List<Product> getProductsAccessoriess() {
         return productRepository.getProductsAccessoriess(PageRequest.of(0, 10, Sort.by("id").descending()));
     }
 
-    public List<ProductDto> getProductsGlass() {
+    public List<Product> getProductsGlass() {
         return productRepository.getProductsGlass(PageRequest.of(0, 10, Sort.by("id").descending()));
     }
 
-    public List<ProductDto> getProductsWatch() {
+    public List<Product> getProductsWatch() {
         return productRepository.getProductsWatch(PageRequest.of(0, 10, Sort.by("id").descending()));
     }
 
-    public List<ProductDto> getProductsByCategory(Integer cate, Integer limit) {
+    public List<Product> getProductsByCategory(Integer cate, Integer limit) {
         return productRepository.getProductsByCategory(cate, PageRequest.of(0, limit, Sort.by("id").descending()));
     }
     public List<Product> getActive() {

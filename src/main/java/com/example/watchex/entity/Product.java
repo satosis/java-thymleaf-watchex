@@ -71,4 +71,12 @@ public class Product {
         }
         return "http://localhost:8081/view/img/no-image.png";
     }
+
+    public Integer getStar() {
+        if (Integer.parseInt(String.valueOf(this.pro_review_total)) > 0) {
+            return (this.pro_review_star - 5) / this.pro_review_total;
+        }
+        return this.pro_review_star;
+    }
+
 }

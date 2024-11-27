@@ -1,5 +1,6 @@
 package com.example.watchex.controller;
 
+import com.example.watchex.dto.ProductDetailDto;
 import com.example.watchex.dto.ProductDto;
 import com.example.watchex.dto.RatingDto;
 import com.example.watchex.entity.*;
@@ -56,13 +57,13 @@ public class ProductController {
     public String detail(@PathVariable("slug") String slug, Model model) throws ClassNotFoundException {
         User user = CommonUtils.getCurrentUser();
         List<Category> categories = categoryService.getAll();
-        ProductDto product = productService.findBySlug(slug);
+        ProductDetailDto product = productService.findBySlug(slug);
         Product entityProduct = productService.show(product.getId());
         List<RatingDto> ratings = ratingRepository.getRatingProduct(product.getId());
         List<Rating> listRating = ratingRepository.getListRatingProduct(entityProduct);
         List<Rating> myRating = ratingRepository.getMyRatingProduct(entityProduct, user);
-        List<ProductDto> productSuggest = productService.getProductsByCategory(product.getCategory().getId(), 3);
-        UserFavourite userFavourite = userFavouriteService.getByProductId(product);
+        List<Product> productSuggest = productService.getProductsByCategory(product.getCategory().getId(), 3);
+        UserFavourite userFavourite = userFavouriteService.getByProductId(entityProduct);
         String[] tags= product.getKeywordseo().split(",");
         model.addAttribute("cartCount", Cart.cart.size());
         model.addAttribute("product", product);
@@ -80,7 +81,7 @@ public class ProductController {
     public String category(@PathVariable("slug") String slug, @RequestParam Map<String, String> params, Model model) {
         List<Category> categories = categoryService.getAll();
         Category category = categoryService.findBySlug(slug);
-        Page<ProductDto> products = productService.findBySlugCategory(slug, params);
+        Page<Product> products = productService.findBySlugCategory(slug, params);
         model.addAttribute("cartCount", Cart.cart.size());
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);

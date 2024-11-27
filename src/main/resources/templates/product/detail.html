@@ -306,7 +306,7 @@
                                         <img class="star"
                                              src="//laz-img-cdn.alicdn.com/tfs/TB18ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png"
                                              style="width: 33.25px; height: 33.25px;" th:if="${product.star < 5}"
-                                             th:each="i : ${#numbers.sequence(product.star, 5)}">
+                                             th:each="i : ${#numbers.sequence(product.star + 1, 5)}">
                                     </div>
                                 </div>
                             </div>
@@ -331,7 +331,7 @@
                                              <div class="bar fg" style="width: 33%"></div>
                                           </div>
                                        </span>
-                                    <span class="percent" th:if="${ratings != null}">3</span>
+                                    <span class="percent" th:if="${ratings != null}" th:text="${product.ratings}"></span>
                                 </li>
                             </ul>
                         </div>
@@ -347,7 +347,7 @@
                             <div class="container-star starCtn left" style="width: 83.125px; height: 16.625px;">
                                 <img th:each="i : ${#numbers.sequence(1, rating.r_number)}" class="star"
                                      src="//laz-img-cdn.alicdn.com/tfs/TB19ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png">
-                                <img th:each="i : ${#numbers.sequence(rating.r_number, 5)}"
+                                <img th:each="i : ${#numbers.sequence(rating.r_number + 1, 5)}"
                                      th:if="${rating.r_number < 5 }" class="star"
                                      src="//laz-img-cdn.alicdn.com/tfs/TB18ZvEgfDH8KJjy1XcXXcpdXXa-64-64.png">
                             </div>

@@ -27,16 +27,16 @@ public class HomeController {
     public String index(Model model) {
         List<Category> categories = categoryService.getAll();
         List<Product> products = productService.getAll();
-        List<ProductDto> productsAccessoriess = productService.getProductsAccessoriess();
-        List<ProductDto> productsGlass = productService.getProductsGlass();
-        List<ProductDto> productsWatch = productService.getProductsWatch();
-        List<ProductDto> listProduct1 = productService.getProductsByCategory(1, 15);
-        List<ProductDto> listProduct2 = productService.getProductsByCategory(2, 15);
-        List<ProductDto> listProduct3 = productService.getProductsByCategory(3, 15);
-        List<ProductDto> listProduct4 = productService.getProductsByCategory(4, 15);
-        List<ProductDto> listProduct5 = productService.getProductsByCategory(5, 15);
-        List<ProductDto> listProduct6 = productService.getProductsByCategory(6, 15);
-        List<ProductDto> listProduct7 = productService.getProductsByCategory(7, 15);
+        List<Product> productsAccessoriess = productService.getProductsAccessoriess();
+        List<Product> productsGlass = productService.getProductsGlass();
+        List<Product> productsWatch = productService.getProductsWatch();
+        List<Product> listProduct1 = productService.getProductsByCategory(1, 15);
+        List<Product> listProduct2 = productService.getProductsByCategory(2, 15);
+        List<Product> listProduct3 = productService.getProductsByCategory(3, 15);
+        List<Product> listProduct4 = productService.getProductsByCategory(4, 15);
+        List<Product> listProduct5 = productService.getProductsByCategory(5, 15);
+        List<Product> listProduct6 = productService.getProductsByCategory(6, 15);
+        List<Product> listProduct7 = productService.getProductsByCategory(7, 15);
 
         model.addAttribute("cartCount", Cart.cart.size());
         model.addAttribute("categories", categories);

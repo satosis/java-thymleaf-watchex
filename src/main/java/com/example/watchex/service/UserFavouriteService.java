@@ -21,7 +21,7 @@ public class UserFavouriteService {
     @Autowired
     private UserFavouriteRepository userFavouriteRepository;
 
-    public UserFavourite getByProductId(ProductDto product) {
+    public UserFavourite getByProductId(Product product) {
         User user = CommonUtils.getCurrentUser();
         UserFavourite result = userFavouriteRepository.getByProductId(user, product.getId());
         return result;
